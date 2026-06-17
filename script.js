@@ -196,6 +196,9 @@
      3. NAVIGATION
      ============================================================ */
   function initNavigation() {
+    const mobileMenu = $('.mobile-menu');
+    const mobileLinks = $$('.mobile-link');
+
     /* Scroll effect */
     function onScroll() {
       if (window.scrollY > 50) {
@@ -208,23 +211,85 @@
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
 
-    /* Mobile menu toggle */
+    /* Mobile menu open */
+    function openMenu() {
+      mobileMenu.classList.add('open');
+      mobileMenu.setAttribute('aria-hidden', 'false');
+      navToggle.classList.add('active');
+      navToggle.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+      setTimeout(() => mobileLinks[0]?.focus(), 100);
+    }
+
+    /* Mobile menu close */
+    function closeMenu() {
+      mobileMenu.classList.remove('open');
+      mobileMenu.setAttribute('aria-hidden', 'true');
+      navToggle.classList.remove('active');
+      navToggle.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+
+    /* Toggle */
     navToggle.addEventListener('click', () => {
-      const isOpen = navLinks.classList.toggle('open');
-      navToggle.classList.toggle('active');
-      navToggle.setAttribute('aria-expanded', isOpen);
+      if (mobileMenu.classList.contains('open')) {
+        closeMenu();
+        navToggle.focus();
+      } else {
+        openMenu();
+      }
     });
 
-    /* Close menu on link click */
-    $$('.nav-link').forEach((link) => {
-      link.addEventListener('click', () => {
-        navLinks.classList.remove('open');
-        navToggle.classList.remove('active');
-        navToggle.setAttribute('aria-expanded', 'false');
+    /* Close on link click + smooth scroll */
+    mobileLinks.forEach((link) => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = link.getAttribute('href');
+        closeMenu();
+        setTimeout(() => {
+          document.querySelector(target)?.scrollIntoView({ behavior: 'smooth' });
+        }, 350);
+        navToggle.focus();
       });
     });
 
-    /* Active section highlighting */
+    /* Close on overlay click */
+    mobileMenu.addEventListener('click', (e) => {
+      if (e.target === mobileMenu) {
+        closeMenu();
+        navToggle.focus();
+      }
+    });
+
+    /* ESC key */
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && mobileMenu.classList.contains('open')) {
+        closeMenu();
+        navToggle.focus();
+      }
+    });
+
+    /* Focus trapping */
+    mobileMenu.addEventListener('keydown', (e) => {
+      if (e.key !== 'Tab') return;
+      const focusable = mobileLinks;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (e.shiftKey) {
+        if (document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        }
+      } else {
+        if (document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    });
+
+    /* Active section highlighting for both desktop + mobile links */
     const sections = $$('section[id]');
     const observerOptions = {
       rootMargin: '-50% 0px -50% 0px',
@@ -234,9 +299,10 @@
     const sectionObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          $$('.nav-link').forEach((link) => {
+          const id = entry.target.id;
+          $$('.nav-link, .mobile-link').forEach((link) => {
             link.classList.remove('active');
-            if (link.getAttribute('href') === `#${entry.target.id}`) {
+            if (link.getAttribute('href') === `#${id}`) {
               link.classList.add('active');
             }
           });
