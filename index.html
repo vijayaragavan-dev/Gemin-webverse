@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="EduVerse 2050 – AI-Powered Education Without Boundaries. Experience the future of learning through artificial intelligence, immersive technologies, and personalized AI mentors.">
+  <meta name="keywords" content="EduVerse, AI Education, Future Learning, Gemini AI, Virtual Reality Classrooms, Personalized Learning">
+  <meta name="author" content="EduVerse Team">
+  <meta name="robots" content="index, follow">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="EduVerse 2050 – AI-Powered Education">
+  <meta property="og:description" content="Education Without Boundaries, Powered by AI. Experience the future of learning.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="assets/poster-main.jpeg">
+  <meta property="og:url" content="https://eduverse2050.netlify.app">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="EduVerse 2050 – AI-Powered Education">
+  <meta name="twitter:description" content="Education Without Boundaries, Powered by AI.">
+  <meta name="twitter:image" content="assets/poster-main.jpeg">
+
+  <!-- Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230B1120'/%3E%3Ctext x='16' y='22' font-family='Arial' font-weight='bold' font-size='18' fill='%2300E5FF' text-anchor='middle'%3EE%3C/text%3E%3C/svg%3E">
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+  <link rel="apple-touch-icon" href="assets/favicon.ico">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css">
+
+  <title>EduVerse 2050 – AI-Powered Education Without Boundaries</title>
+</head>
+<body>
+
+  <!-- ==================== LOADING SCREEN ==================== -->
+  <div id="loading-screen" role="status" aria-label="Loading">
+    <div class="loader-content">
+      <div class="loader-logo">
+        <span class="loader-icon">E</span>
+      </div>
+      <h1 class="loader-title">EDUVERSE 2050</h1>
+      <div class="loader-bar">
+        <div class="loader-bar-fill"></div>
+      </div>
+      <p class="loader-subtitle">Loading the future of education...</p>
+    </div>
+  </div>
+
+  <!-- ==================== NAVIGATION ==================== -->
+  <nav id="navbar" role="navigation" aria-label="Main navigation">
+    <div class="nav-container">
+      <a href="#hero" class="nav-logo" aria-label="EduVerse Home">
+        <span class="nav-logo-icon">E</span>
+        <span class="nav-logo-text">EduVerse</span>
+      </a>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span class="nav-toggle-line"></span>
+        <span class="nav-toggle-line"></span>
+        <span class="nav-toggle-line"></span>
+      </button>
+      <ul class="nav-links" role="menubar">
+        <li role="none"><a href="#poster" role="menuitem" class="nav-link">Poster</a></li>
+        <li role="none"><a href="#soundtrack" role="menuitem" class="nav-link">Soundtrack</a></li>
+        <li role="none"><a href="#story" role="menuitem" class="nav-link">Story</a></li>
+        <li role="none"><a href="#features" role="menuitem" class="nav-link">Features</a></li>
+        <li role="none"><a href="#stats" role="menuitem" class="nav-link">Impact</a></li>
+        <li role="none"><a href="#team" role="menuitem" class="nav-link">Team</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ==================== HERO SECTION ==================== -->
+  <section id="hero" class="section hero" aria-label="Hero">
+    <canvas id="particle-canvas" aria-hidden="true"></canvas>
+    <div class="hero-gradient" aria-hidden="true"></div>
+    <div class="container hero-content">
+      <div class="hero-badge" data-reveal="fade-up">
+        <span class="badge-dot"></span>
+        Powered by Gemini AI
+      </div>
+      <h1 class="hero-title" data-reveal="fade-up" data-delay="200">
+        <span class="hero-title-line">EduVerse</span>
+        <span class="hero-title-line accent">2050</span>
+      </h1>
+      <p class="hero-subtitle" data-reveal="fade-up" data-delay="400">
+        Shaping the Future of Learning Through Artificial Intelligence
+      </p>
+      <p class="hero-desc" data-reveal="fade-up" data-delay="600">
+        Experience an educational revolution where AI mentors, immersive technologies, and personalized learning empower every student across the globe.
+      </p>
+      <div class="hero-actions" data-reveal="fade-up" data-delay="800">
+        <a href="#poster" class="btn btn-primary">
+          <span>Explore Future</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+        <a href="#soundtrack" class="btn btn-secondary">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          <span>Listen to Soundtrack</span>
+        </a>
+      </div>
+    </div>
+    <div class="scroll-indicator" aria-hidden="true">
+      <span class="scroll-text">Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ==================== AI POSTER SECTION ==================== -->
+  <section id="poster" class="section poster-section" aria-label="AI Poster">
+    <div class="container">
+      <div class="section-header" data-reveal="fade-up">
+        <h2 class="section-title">The Future Visualized</h2>
+        <p class="section-subtitle">Witness the dawn of AI-driven education</p>
+      </div>
+      <div class="poster-wrapper" data-reveal="fade-up" data-delay="200">
+        <div class="poster-frame" id="poster-tilt">
+          <div class="poster-glow"></div>
+          <div class="poster-image-wrapper">
+            <img
+              src="assets/poster-main.jpeg"
+              alt="EduVerse 2050 AI-Powered Education Poster"
+              class="poster-image"
+              loading="lazy"
+              id="poster-main-img"
+              onerror="this.parentElement.classList.add('poster-fallback'); this.style.display='none';"
+            >
+            <div class="poster-fallback-content">
+              <div class="fallback-grid"></div>
+              <div class="fallback-circle"></div>
+              <div class="fallback-circle fallback-circle-2"></div>
+              <div class="fallback-text">
+                <span>EDUVERSE</span>
+                <span>2050</span>
+              </div>
+            </div>
+          </div>
+          <div class="poster-shine"></div>
+        </div>
+        <p class="poster-caption" data-reveal="fade-up" data-delay="400">
+          "Visualizing the future of AI-driven education."
+        </p>
+      </div>
+    </div>
+
+    <!-- Poster Modal -->
+    <div id="poster-modal" class="modal" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Poster preview">
+      <div class="modal-overlay" id="modal-overlay"></div>
+      <div class="modal-content">
+        <button class="modal-close" aria-label="Close modal">&times;</button>
+        <img src="assets/poster-main.jpeg" alt="EduVerse 2050 Poster Full View" class="modal-image" id="modal-image" loading="lazy" onerror="this.alt='EduVerse 2050 Poster — Image unavailable'; this.style.opacity='0.5';">
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SOUNDTRACK SECTION ==================== -->
+  <section id="soundtrack" class="section soundtrack-section" aria-label="Soundtrack">
+    <div class="container">
+      <div class="section-header" data-reveal="fade-up">
+        <h2 class="section-title">First Light of Day</h2>
+        <p class="section-subtitle">The sound of tomorrow's education.</p>
+      </div>
+      <div class="soundtrack-content" data-reveal="fade-up" data-delay="200">
+        <div class="equalizer" id="equalizer" aria-hidden="true">
+          <div class="eq-bar"></div>
+          <div class="eq-bar"></div>
+          <div class="eq-bar"></div>
+          <div class="eq-bar"></div>
+          <div class="eq-bar"></div>
+        </div>
+        <div class="player">
+          <div class="player-info">
+            <div class="player-art">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+            </div>
+            <div class="player-meta">
+              <span class="player-title">First Light of Day</span>
+              <span class="player-artist">EduVerse Soundtrack</span>
+            </div>
+          </div>
+          <div class="player-progress">
+            <span class="player-time current" id="current-time">0:00</span>
+            <div class="progress-track" id="progress-track">
+              <div class="progress-fill" id="progress-fill"></div>
+              <div class="progress-thumb" id="progress-thumb"></div>
+            </div>
+            <span class="player-time duration" id="duration">0:00</span>
+          </div>
+          <div class="player-controls">
+            <button class="ctrl-btn" id="loop-btn" aria-label="Toggle loop" aria-pressed="false">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+            </button>
+            <button class="ctrl-btn play-btn" id="play-btn" aria-label="Play">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="play-icon"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="pause-icon" style="display:none"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+            </button>
+            <div class="volume-control">
+              <button class="ctrl-btn" id="mute-btn" aria-label="Toggle mute" aria-pressed="false">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="volume-icon"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="mute-icon" style="display:none"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+              </button>
+              <div class="volume-slider">
+                <div class="volume-track" id="volume-track">
+                  <div class="volume-fill" id="volume-fill"></div>
+                  <div class="volume-thumb" id="volume-thumb"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <audio id="audio-player" preload="metadata" src="assets/music/First_Light_of_day.mp3.mpeg"></audio>
+  </section>
+
+  <!-- ==================== STORY SECTION ==================== -->
+  <section id="story" class="section story-section" aria-label="Story Timeline">
+    <div class="container">
+      <div class="section-header" data-reveal="fade-up">
+        <h2 class="section-title">The Journey</h2>
+        <p class="section-subtitle">Tracing the evolution of AI in education</p>
+      </div>
+      <div class="timeline">
+        <div class="timeline-line" aria-hidden="true"></div>
+
+        <div class="timeline-card" data-reveal="fade-left" data-delay="100">
+          <div class="timeline-year">2030</div>
+          <div class="timeline-content">
+            <h3 class="timeline-title">Rise of AI Tutors</h3>
+            <p class="timeline-desc">Intelligent tutoring systems begin adapting to individual learning styles in real-time, marking the first major shift from one-size-fits-all education.</p>
+          </div>
+        </div>
+
+        <div class="timeline-card" data-reveal="fade-right" data-delay="300">
+          <div class="timeline-year">2040</div>
+          <div class="timeline-content">
+            <h3 class="timeline-title">Immersive Learning Ecosystems</h3>
+            <p class="timeline-desc">Virtual and augmented reality merge with AI to create fully immersive educational environments where students learn through experience.</p>
+          </div>
+        </div>
+
+        <div class="timeline-card" data-reveal="fade-left" data-delay="500">
+          <div class="timeline-year">2050</div>
+          <div class="timeline-content">
+            <h3 class="timeline-title">EduVerse Revolution</h3>
+            <p class="timeline-desc">Education transcends all boundaries. AI mentors guide every learner personally, making quality education accessible to every human on Earth.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FUTURE FEATURES SECTION ==================== -->
+  <section id="features" class="section features-section" aria-label="Future Features">
+    <div class="container">
+      <div class="section-header" data-reveal="fade-up">
+        <h2 class="section-title">Future Features</h2>
+        <p class="section-subtitle">Technologies redefining the learning experience</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card" data-reveal="fade-up" data-delay="100">
+          <div class="card-glow"></div>
+          <div class="card-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a4 4 0 0 1 4 4v2a4 4 0 0 1-8 0V6a4 4 0 0 1 4-4z"/><path d="M20 22v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          <h3 class="card-title">AI Mentor</h3>
+          <p class="card-desc">Your personal AI guide adapts to your learning pace, style, and goals — available 24/7.</p>
+        </div>
+
+        <div class="feature-card" data-reveal="fade-up" data-delay="200">
+          <div class="card-glow"></div>
+          <div class="card-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          </div>
+          <h3 class="card-title">Personalized Learning</h3>
+          <p class="card-desc">Unique curricula generated in real-time based on your strengths, weaknesses, and interests.</p>
+        </div>
+
+        <div class="feature-card" data-reveal="fade-up" data-delay="300">
+          <div class="card-glow"></div>
+          <div class="card-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9"/><path d="M21 3v6h-6"/><path d="M21 3l-7 7"/><path d="M3 12a9 9 0 0 1 9-9"/></svg>
+          </div>
+          <h3 class="card-title">VR Classrooms</h3>
+          <p class="card-desc">Step into fully immersive virtual classrooms where you can interact with 3D objects and environments.</p>
+        </div>
+
+        <div class="feature-card" data-reveal="fade-up" data-delay="400">
+          <div class="card-glow"></div>
+          <div class="card-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </div>
+          <h3 class="card-title">Global Access</h3>
+          <p class="card-desc">Breaking geographic barriers — world-class education delivered to any device, anywhere on Earth.</p>
+        </div>
+
+        <div class="feature-card" data-reveal="fade-up" data-delay="500">
+          <div class="card-glow"></div>
+          <div class="card-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8l6 6"/><path d="M4 14l4 4 2-4"/><path d="M14 4l6 6"/><path d="M12 2v4"/><path d="M12 18v4"/><path d="M4 12H2"/><path d="M22 12h-2"/></svg>
+          </div>
+          <h3 class="card-title">Multilingual AI</h3>
+          <p class="card-desc">Real-time translation and cultural adaptation make learning possible in any language.</p>
+        </div>
+
+        <div class="feature-card" data-reveal="fade-up" data-delay="600">
+          <div class="card-glow"></div>
+          <div class="card-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          </div>
+          <h3 class="card-title">Adaptive Intelligence</h3>
+          <p class="card-desc">Self-evolving AI that learns from billions of interactions to continuously improve educational outcomes.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FUTURE CLASSROOM SECTION ==================== -->
+  <section id="classroom" class="section classroom-section" aria-label="Future Classroom">
+    <div class="container">
+      <div class="section-header" data-reveal="fade-up">
+        <h2 class="section-title">Classroom of Tomorrow</h2>
+        <p class="section-subtitle">Where learning comes alive</p>
+      </div>
+      <div class="classroom-wrapper" data-reveal="fade-up" data-delay="200">
+        <div class="classroom-frame parallax-layer" id="classroom-parallax">
+          <div class="classroom-glow"></div>
+          <div class="classroom-image-wrapper">
+            <img
+              src="assets/poster-classroom.jpeg"
+              alt="EduVerse 2050 Future Classroom"
+              class="classroom-image"
+              loading="lazy"
+              id="classroom-img"
+              onerror="this.parentElement.classList.add('classroom-fallback'); this.style.display='none';"
+            >
+            <div class="classroom-fallback-content">
+              <div class="fallback-grid classroom-grid"></div>
+              <div class="fallback-arc"></div>
+              <div class="fallback-students">
+                <div class="student-shape"></div>
+                <div class="student-shape"></div>
+                <div class="student-shape"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="classroom-caption" data-reveal="fade-up" data-delay="400">
+          "Inside the classrooms of tomorrow."
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== IMPACT STATISTICS SECTION ==================== -->
+  <section id="stats" class="section stats-section" aria-label="Impact Statistics">
+    <div class="container">
+      <div class="section-header" data-reveal="fade-up">
+        <h2 class="section-title">Our Impact</h2>
+        <p class="section-subtitle">Transforming education at a global scale</p>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card" data-reveal="fade-up" data-delay="100">
+          <div class="stat-glow"></div>
+          <span class="stat-number" data-target="1" data-suffix="B+">0</span>
+          <span class="stat-label">Students Empowered</span>
+        </div>
+        <div class="stat-card" data-reveal="fade-up" data-delay="200">
+          <div class="stat-glow"></div>
+          <span class="stat-number" data-target="150" data-suffix="+">0</span>
+          <span class="stat-label">Languages Supported</span>
+        </div>
+        <div class="stat-card" data-reveal="fade-up" data-delay="300">
+          <div class="stat-glow"></div>
+          <span class="stat-number" data-target="24" data-suffix="/7">0</span>
+          <span class="stat-label">AI Assistance</span>
+        </div>
+        <div class="stat-card" data-reveal="fade-up" data-delay="400">
+          <div class="stat-glow"></div>
+          <span class="stat-number" data-target="100" data-suffix="%">0</span>
+          <span class="stat-label">Accessible Learning</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== TEAM SECTION ==================== -->
+  <section id="team" class="section team-section" aria-label="Team">
+    <div class="container">
+      <div class="section-header" data-reveal="fade-up">
+        <h2 class="section-title">Meet the Team</h2>
+        <p class="section-subtitle">Visionaries building the future of education</p>
+      </div>
+      <div class="team-grid">
+        <div class="team-card" data-reveal="fade-up" data-delay="100">
+          <div class="team-card-inner">
+            <div class="team-avatar">
+              <div class="avatar-placeholder">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              </div>
+            </div>
+            <h3 class="team-name">Vijayaragavan U</h3>
+            <p class="team-role">Full Stack Developer</p>
+            <div class="team-social">
+              <a href="https://github.com/vijayaragavan-dev" target="_blank" rel="noopener noreferrer" class="social-link github" aria-label="View GitHub Profile" title="View GitHub Profile">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+              </a>
+              <a href="https://www.linkedin.com/in/vijaya-ragavan-ki10052007" target="_blank" rel="noopener noreferrer" class="social-link linkedin" aria-label="View LinkedIn Profile" title="View LinkedIn Profile">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="team-card" data-reveal="fade-up" data-delay="200">
+          <div class="team-card-inner">
+            <div class="team-avatar">
+              <div class="avatar-placeholder">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              </div>
+            </div>
+            <h3 class="team-name">Pravin Kumar M</h3>
+            <p class="team-role">UI/UX Designer</p>
+            <div class="team-social">
+              <a href="https://github.com/ProPravin" target="_blank" rel="noopener noreferrer" class="social-link github" aria-label="View GitHub Profile" title="View GitHub Profile">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+              </a>
+              <a href="https://www.linkedin.com/in/pravin-kumar-11b88431b" target="_blank" rel="noopener noreferrer" class="social-link linkedin" aria-label="View LinkedIn Profile" title="View LinkedIn Profile">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="team-card" data-reveal="fade-up" data-delay="300">
+          <div class="team-card-inner">
+            <div class="team-avatar">
+              <div class="avatar-placeholder">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              </div>
+            </div>
+            <h3 class="team-name">Saarukesh M</h3>
+            <p class="team-role">Prompt Engineer</p>
+            <div class="team-social">
+              <a href="https://github.com/Saarukesh30" target="_blank" rel="noopener noreferrer" class="social-link github" aria-label="View GitHub Profile" title="View GitHub Profile">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+              </a>
+              <a href="https://www.linkedin.com/in/saarukesh-m-67a737391" target="_blank" rel="noopener noreferrer" class="social-link linkedin" aria-label="View LinkedIn Profile" title="View LinkedIn Profile">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== QUOTE SECTION ==================== -->
+  <section id="quote" class="section quote-section" aria-label="Quote">
+    <div class="container">
+      <div class="quote-content" data-reveal="fade-up">
+        <div class="quote-mark" aria-hidden="true">
+          <svg width="80" height="80" viewBox="0 0 24 24" fill="currentColor" opacity="0.1"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H14.017zM0 21v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151C7.563 6.068 6 8.789 6 11h4v10H0z"/></svg>
+        </div>
+        <blockquote class="quote-text">
+          "Education without boundaries, powered by AI."
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <span class="footer-logo-icon">E</span>
+            <span class="footer-logo-text">EduVerse 2050</span>
+          </div>
+          <p class="footer-desc">Education Without Boundaries, Powered by AI.</p>
+        </div>
+        <div class="footer-links">
+          <div class="footer-col">
+            <h4 class="footer-heading">Navigate</h4>
+            <a href="#poster">Poster</a>
+            <a href="#soundtrack">Soundtrack</a>
+            <a href="#story">Story</a>
+            <a href="#features">Features</a>
+          </div>
+          <div class="footer-col">
+            <h4 class="footer-heading">Connect</h4>
+            <a href="#">GitHub</a>
+            <a href="#">LinkedIn</a>
+            <a href="#">Twitter</a>
+            <a href="#">Contact</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-divider"></div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 EduVerse Team. All rights reserved.</p>
+        <p>Gemini Webverse Challenge 2026</p>
+        <p class="footer-tagline">Designed for the future. Built with AI.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll to top -->
+  <button id="scroll-top" class="scroll-top-btn" aria-label="Scroll to top">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+  </button>
+
+  <!-- Scripts -->
+  <script src="script.js"></script>
+</body>
+</html>
