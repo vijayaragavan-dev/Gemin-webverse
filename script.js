@@ -197,12 +197,15 @@
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
 
+    var airaChat = document.getElementById('aira-chat');
+
     function openMenu() {
       mobileMenu.classList.add('open');
       mobileMenu.setAttribute('aria-hidden', 'false');
       navToggle.classList.add('active');
       navToggle.setAttribute('aria-expanded', 'true');
       document.body.style.overflow = 'hidden';
+      if (airaChat) airaChat.classList.add('aira-hidden');
       setTimeout(() => mobileLinks[0]?.focus(), 100);
     }
 
@@ -212,6 +215,7 @@
       navToggle.classList.remove('active');
       navToggle.setAttribute('aria-expanded', 'false');
       document.body.style.overflow = '';
+      if (airaChat) airaChat.classList.remove('aira-hidden');
     }
 
     navToggle.addEventListener('click', () => {
