@@ -13,6 +13,7 @@
   const posterModal = $('#poster-modal');
   const modalOverlay = $('#modal-overlay');
   const modalClose = $('.modal-close');
+  const modalContent = $('.modal-content');
   const audio = $('#audio-player');
   const playBtn = $('#play-btn');
   const playIcon = $('#play-icon');
@@ -29,14 +30,20 @@
   const volumeFill = $('#volume-fill');
   const volumeThumb = $('#volume-thumb');
   const volumeTrack = $('#volume-track');
+  const volumeControl = $('.volume-control');
   const equalizer = $('#equalizer');
   const scrollTopBtn = $('#scroll-top');
   const classroomParallax = $('#classroom-parallax');
+  const classroomFrame = $('.classroom-frame');
   const scrollProgress = $('#scroll-progress');
   const testimonialTrack = $('#testimonial-track');
   const testimonialDots = $('#testimonial-dots');
   const prevBtn = $('.prev-btn');
   const nextBtn = $('.next-btn');
+  const cursorGlow = $('#cursor-glow');
+  const heroContent = $('.hero-content');
+
+  let audioErrorShown = false;
 
   function formatTime(seconds) {
     if (isNaN(seconds) || !isFinite(seconds)) return '0:00';
@@ -54,26 +61,93 @@
     };
   }
 
+  function throttle(fn, ms) {
+    ms = ms || 100;
+    let last = 0;
+    return function () {
+      const now = Date.now();
+      if (now - last >= ms) {
+        last = now;
+        fn.apply(this, arguments);
+      }
+    };
+  }
+
+  function isTouchDevice() {
+    return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+  }
+
+  function addTouchTilt(element, intensity) {
+    if (!element) return;
+    intensity = intensity || 4;
+
+    element.addEventListener('touchstart', function (e) {
+      const touch = e.touches[0];
+      const rect = element.getBoundingClientRect();
+      const x = touch.clientX - rect.left;
+      const y = touch.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      const rotateX = ((y - centerY) / centerY) * -intensity;
+      const rotateY = ((x - centerX) / centerX) * intensity;
+      element.style.transform = 'perspective(800px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) translateY(-4px)';
+    }, { passive: true });
+
+    element.addEventListener('touchend', function () {
+      element.style.transform = '';
+    }, { passive: true });
+  }
+
+  function trapFocus(element, firstFocusable, lastFocusable) {
+    element.addEventListener('keydown', function (e) {
+      if (e.key !== 'Tab') return;
+      const first = firstFocusable || element.querySelector('[tabindex]:not([tabindex="-1"]), button, a, input');
+      const last = lastFocusable || first;
+      if (e.shiftKey) {
+        if (document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        }
+      } else {
+        if (document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    });
+  }
+
   /* LOADING SCREEN */
   function initLoadingScreen() {
+    let loaded = false;
     function hideLoading() {
+      if (loaded) return;
+      loaded = true;
       loadingScreen.classList.add('loaded');
       document.body.classList.remove('loading-active');
     }
-    window.addEventListener('load', () => setTimeout(hideLoading, 2000));
-    if (document.readyState === 'complete') setTimeout(hideLoading, 2000);
+    window.addEventListener('load', hideLoading);
+    setTimeout(hideLoading, 3000);
+    if (document.readyState === 'complete') hideLoading();
   }
 
   /* SCROLL PROGRESS */
   function initScrollProgress() {
+    let ticking = false;
     function updateProgress() {
       const scrollTop = window.scrollY;
       const docHeight = document.documentElement.scrollHeight - window.innerHeight;
       const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
       scrollProgress.style.width = progress + '%';
       scrollProgress.setAttribute('aria-valuenow', Math.round(progress));
+      ticking = false;
     }
-    window.addEventListener('scroll', updateProgress, { passive: true });
+    window.addEventListener('scroll', function () {
+      if (!ticking) {
+        requestAnimationFrame(updateProgress);
+        ticking = true;
+      }
+    }, { passive: true });
     updateProgress();
   }
 
@@ -189,6 +263,7 @@
   function initNavigation() {
     const mobileMenu = $('.mobile-menu');
     const mobileLinks = $$('.mobile-link');
+    const airaChat = document.getElementById('aira-chat');
 
     function onScroll() {
       navbar.classList.toggle('scrolled', window.scrollY > 50);
@@ -197,8 +272,6 @@
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
 
-    var airaChat = document.getElementById('aira-chat');
-
     function openMenu() {
       mobileMenu.classList.add('open');
       mobileMenu.setAttribute('aria-hidden', 'false');
@@ -206,7 +279,10 @@
       navToggle.setAttribute('aria-expanded', 'true');
       document.body.style.overflow = 'hidden';
       if (airaChat) airaChat.classList.add('aira-hidden');
-      setTimeout(() => mobileLinks[0]?.focus(), 100);
+      setTimeout(() => {
+        const firstLink = mobileLinks[0];
+        if (firstLink) firstLink.focus();
+      }, 100);
     }
 
     function closeMenu() {
@@ -233,7 +309,8 @@
         const target = link.getAttribute('href');
         closeMenu();
         setTimeout(() => {
-          document.querySelector(target)?.scrollIntoView({ behavior: 'smooth' });
+          const el = document.querySelector(target);
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
         }, 350);
         navToggle.focus();
       });
@@ -253,24 +330,7 @@
       }
     });
 
-    mobileMenu.addEventListener('keydown', (e) => {
-      if (e.key !== 'Tab') return;
-      const focusable = mobileLinks;
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-
-      if (e.shiftKey) {
-        if (document.activeElement === first) {
-          e.preventDefault();
-          last.focus();
-        }
-      } else {
-        if (document.activeElement === last) {
-          e.preventDefault();
-          first.focus();
-        }
-      }
-    });
+    trapFocus(mobileMenu, mobileLinks[0], mobileLinks[mobileLinks.length - 1]);
 
     const sections = $$('section[id]');
     const observerOptions = {
@@ -357,6 +417,10 @@
     posterTilt.addEventListener('mouseleave', () => {
       posterTilt.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
     });
+
+    if (isTouchDevice()) {
+      addTouchTilt(posterTilt, 8);
+    }
   }
 
   /* POSTER MODAL */
@@ -367,36 +431,62 @@
       posterModal.classList.add('open');
       posterModal.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
+      if (modalClose) modalClose.focus();
     }
 
     function closeModal() {
       posterModal.classList.remove('open');
       posterModal.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
+      posterTilt.focus();
     }
 
     posterTilt.addEventListener('click', openModal);
-    modalOverlay.addEventListener('click', closeModal);
-    modalClose.addEventListener('click', closeModal);
+    if (modalOverlay) modalOverlay.addEventListener('click', closeModal);
+    if (modalClose) modalClose.addEventListener('click', closeModal);
 
-    document.addEventListener('keydown', (e) => {
+    document.addEventListener('keydown', function handlePosterEsc(e) {
       if (e.key === 'Escape' && posterModal.classList.contains('open')) {
         closeModal();
       }
     });
+
+    const modalImg = $('#modal-image');
+    trapFocus(posterModal, modalClose, modalImg || modalClose);
   }
 
-  /* AUDIO PLAYER */
+  /* HERO PARALLAX */
+  function initHeroParallax() {
+    if (!heroContent) return;
+
+    heroSection.addEventListener('mousemove', function (e) {
+      const rect = heroSection.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      heroContent.style.transform = 'translate(' + (x * 15) + 'px, ' + (y * 15) + 'px)';
+    });
+
+    heroSection.addEventListener('mouseleave', function () {
+      heroContent.style.transform = 'translate(0, 0)';
+    });
+  }
+
+  /* ---- AUDIO PLAYER ---- */
   function initAudioPlayer() {
     if (!audio) return;
 
     let isPlaying = false;
     let isLooping = false;
     let isMuted = false;
+    let userInteracted = false;
+    let dragStartHandler, dragMoveHandler, dragEndHandler;
 
     function togglePlay() {
+      userInteracted = true;
       if (audio.paused) {
-        audio.play().catch(function () {});
+        audio.play().catch(function () {
+          if (!audioErrorShown) showAudioError();
+        });
       } else {
         audio.pause();
       }
@@ -404,36 +494,44 @@
 
     function updatePlayState() {
       isPlaying = !audio.paused;
-      playIcon.style.display = isPlaying ? 'none' : 'block';
-      pauseIcon.style.display = isPlaying ? 'block' : 'none';
-      playBtn.setAttribute('aria-label', isPlaying ? 'Pause' : 'Play');
-      equalizer.classList.toggle('playing', isPlaying);
+      if (playIcon) playIcon.style.display = isPlaying ? 'none' : 'block';
+      if (pauseIcon) pauseIcon.style.display = isPlaying ? 'block' : 'none';
+      if (playBtn) playBtn.setAttribute('aria-label', isPlaying ? 'Pause' : 'Play');
+      if (equalizer) equalizer.classList.toggle('playing', isPlaying);
     }
 
     function updateProgress() {
       if (!audio.duration) return;
       const pct = (audio.currentTime / audio.duration) * 100;
-      progressFill.style.width = pct + '%';
-      progressThumb.style.left = pct + '%';
-      currentTimeEl.textContent = formatTime(audio.currentTime);
+      if (progressFill) progressFill.style.width = pct + '%';
+      if (progressThumb) progressThumb.style.left = pct + '%';
+      if (currentTimeEl) currentTimeEl.textContent = formatTime(audio.currentTime);
     }
 
     function setDuration() {
-      durationEl.textContent = formatTime(audio.duration);
+      if (durationEl) durationEl.textContent = formatTime(audio.duration);
     }
 
     function seek(e) {
+      if (!progressTrack) return;
       const rect = progressTrack.getBoundingClientRect();
-      const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
-      audio.currentTime = pct * audio.duration;
+      const clientX = e.clientX || (e.touches && e.touches[0].clientX);
+      if (clientX === undefined) return;
+      const pct = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+      if (isFinite(audio.duration)) {
+        audio.currentTime = pct * audio.duration;
+      }
     }
 
     function setVolume(e) {
+      if (!volumeTrack) return;
       const rect = volumeTrack.getBoundingClientRect();
-      const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+      const clientX = e.clientX || (e.touches && e.touches[0].clientX);
+      if (clientX === undefined) return;
+      const pct = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
       audio.volume = pct;
-      volumeFill.style.width = (pct * 100) + '%';
-      volumeThumb.style.left = (pct * 100) + '%';
+      if (volumeFill) volumeFill.style.width = (pct * 100) + '%';
+      if (volumeThumb) volumeThumb.style.left = (pct * 100) + '%';
       if (audio.volume > 0 && isMuted) {
         isMuted = false;
         audio.muted = false;
@@ -448,101 +546,107 @@
     }
 
     function updateMuteState() {
-      volumeIcon.style.display = isMuted ? 'none' : 'block';
-      muteIcon.style.display = isMuted ? 'block' : 'none';
-      muteBtn.setAttribute('aria-pressed', isMuted);
+      if (volumeIcon) volumeIcon.style.display = isMuted ? 'none' : 'block';
+      if (muteIcon) muteIcon.style.display = isMuted ? 'block' : 'none';
+      if (muteBtn) muteBtn.setAttribute('aria-pressed', isMuted);
     }
 
     function toggleLoop() {
       isLooping = !isLooping;
       audio.loop = isLooping;
-      loopBtn.classList.toggle('active', isLooping);
-      loopBtn.setAttribute('aria-pressed', isLooping);
+      if (loopBtn) {
+        loopBtn.classList.toggle('active', isLooping);
+        loopBtn.setAttribute('aria-pressed', isLooping);
+      }
     }
 
-    playBtn.addEventListener('click', togglePlay);
+    function showAudioError() {
+      audioErrorShown = true;
+      if (playBtn) {
+        playBtn.style.opacity = '0.5';
+        playBtn.style.cursor = 'not-allowed';
+        playBtn.setAttribute('aria-label', 'Audio unavailable');
+      }
+      const container = $('.soundtrack-content');
+      if (container) {
+        const msg = document.createElement('p');
+        msg.className = 'player-error';
+        msg.textContent = 'Soundtrack file not found. Add assets/music/First_Light_of_day.mp3.mpeg';
+        container.appendChild(msg);
+      }
+    }
+
+    if (playBtn) playBtn.addEventListener('click', togglePlay);
 
     audio.addEventListener('play', updatePlayState);
     audio.addEventListener('pause', updatePlayState);
     audio.addEventListener('ended', function () {
       updatePlayState();
-      if (!isLooping) {
+      if (!isLooping && equalizer) {
         equalizer.classList.remove('playing');
       }
     });
     audio.addEventListener('timeupdate', updateProgress);
     audio.addEventListener('loadedmetadata', setDuration);
     audio.addEventListener('durationchange', setDuration);
+    audio.addEventListener('error', function () {
+      if (!audioErrorShown) showAudioError();
+    }, { once: true });
 
-    let isDraggingProgress = false;
     progressTrack.addEventListener('mousedown', function (e) {
-      isDraggingProgress = true;
       seek(e);
+      dragStartHandler = function (ev) { seek(ev); };
+      dragEndHandler = function () {
+        document.removeEventListener('mousemove', dragStartHandler);
+        document.removeEventListener('mouseup', dragEndHandler);
+      };
+      document.addEventListener('mousemove', dragStartHandler);
+      document.addEventListener('mouseup', dragEndHandler);
     });
-    document.addEventListener('mousemove', function (e) {
-      if (isDraggingProgress) seek(e);
-    });
-    document.addEventListener('mouseup', function () {
-      isDraggingProgress = false;
-    });
-
-    let isDraggingVolume = false;
-    volumeTrack.addEventListener('mousedown', function (e) {
-      isDraggingVolume = true;
-      setVolume(e);
-    });
-    document.addEventListener('mousemove', function (e) {
-      if (isDraggingVolume) setVolume(e);
-    });
-    document.addEventListener('mouseup', function () {
-      isDraggingVolume = false;
-    });
-
-    muteBtn.addEventListener('click', toggleMute);
-    loopBtn.addEventListener('click', toggleLoop);
 
     progressTrack.addEventListener('touchstart', function (e) {
-      seek(e.touches[0]);
-    });
-    progressTrack.addEventListener('touchmove', function (e) {
-      seek(e.touches[0]);
+      e.preventDefault();
+      seek(e);
+      dragStartHandler = function (ev) { seek(ev); };
+      dragEndHandler = function () {
+        document.removeEventListener('touchmove', dragStartHandler);
+        document.removeEventListener('touchend', dragEndHandler);
+      };
+      document.addEventListener('touchmove', dragStartHandler, { passive: true });
+      document.addEventListener('touchend', dragEndHandler);
+    }, { passive: false });
+
+    volumeTrack.addEventListener('mousedown', function (e) {
+      setVolume(e);
+      dragStartHandler = function (ev) { setVolume(ev); };
+      dragEndHandler = function () {
+        document.removeEventListener('mousemove', dragStartHandler);
+        document.removeEventListener('mouseup', dragEndHandler);
+      };
+      document.addEventListener('mousemove', dragStartHandler);
+      document.addEventListener('mouseup', dragEndHandler);
     });
 
     volumeTrack.addEventListener('touchstart', function (e) {
-      setVolume(e.touches[0]);
-    });
-    volumeTrack.addEventListener('touchmove', function (e) {
-      setVolume(e.touches[0]);
-    });
+      e.preventDefault();
+      setVolume(e);
+      dragStartHandler = function (ev) { setVolume(ev); };
+      dragEndHandler = function () {
+        document.removeEventListener('touchmove', dragStartHandler);
+        document.removeEventListener('touchend', dragEndHandler);
+      };
+      document.addEventListener('touchmove', dragStartHandler, { passive: true });
+      document.addEventListener('touchend', dragEndHandler);
+    }, { passive: false });
 
-    audio.addEventListener('keydown', function (e) {
-      if (e.key === ' ' || e.key === 'Spacebar') {
-        e.preventDefault();
-        togglePlay();
-      }
-    });
+    if (muteBtn) muteBtn.addEventListener('click', toggleMute);
+    if (loopBtn) loopBtn.addEventListener('click', toggleLoop);
 
-    document.addEventListener('keydown', function (e) {
-      if (e.key === ' ' || e.key === 'Spacebar') {
-        const active = document.activeElement;
-        const isBtn = active && (active.tagName === 'BUTTON' || active.tagName === 'A' || active.tagName === 'INPUT');
-        if (!isBtn) {
-          e.preventDefault();
-          togglePlay();
-        }
-      }
-    });
-
-    audio.addEventListener('error', function () {
-      playBtn.style.opacity = '0.5';
-      playBtn.style.cursor = 'not-allowed';
-      playBtn.setAttribute('aria-label', 'Audio unavailable');
-      const msg = document.createElement('p');
-      msg.className = 'player-error';
-      msg.textContent = 'Soundtrack file not found. Add assets/music/First_Light_of_day.mp3.mpeg';
-      msg.style.cssText = 'color: #ef4444; font-size: 13px; margin-top: 12px;';
-      $('.soundtrack-content').appendChild(msg);
-    }, { once: true });
+    if (volumeControl && isTouchDevice()) {
+      volumeControl.addEventListener('click', function () {
+        this.classList.toggle('active');
+      });
+    }
 
     setDuration();
     updateMuteState();
@@ -635,7 +739,7 @@
 
     observer.observe(classroomParallax);
 
-    window.addEventListener('scroll', function () {
+    const scrollHandler = function () {
       if (!classroomParallax.classList.contains('parallax-active')) return;
       const rect = classroomParallax.getBoundingClientRect();
       const speed = 0.05;
@@ -644,24 +748,15 @@
       if (img) {
         img.style.transform = 'translateY(' + yPos + 'px) scale(1.05)';
       }
-    }, { passive: true });
-  }
+    };
 
-  /* HERO PARALLAX */
-  function initHeroParallax() {
-    const heroContent = $('.hero-content');
+    window.addEventListener('scroll', throttle(scrollHandler, 16), { passive: true });
 
-    heroSection.addEventListener('mousemove', function (e) {
-      const rect = heroSection.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width - 0.5;
-      const y = (e.clientY - rect.top) / rect.height - 0.5;
-
-      heroContent.style.transform = 'translate(' + (x * 15) + 'px, ' + (y * 15) + 'px)';
-    });
-
-    heroSection.addEventListener('mouseleave', function () {
-      heroContent.style.transform = 'translate(0, 0)';
-    });
+    if (classroomFrame && isTouchDevice()) {
+      classroomFrame.addEventListener('click', function () {
+        this.classList.toggle('touch-overlay');
+      });
+    }
   }
 
   /* EQUALIZER */
@@ -692,6 +787,10 @@
       card.addEventListener('mouseleave', function () {
         card.style.transform = '';
       });
+
+      if (isTouchDevice()) {
+        addTouchTilt(card, 4);
+      }
     });
   }
 
@@ -767,6 +866,8 @@
     if (slider) {
       slider.addEventListener('mouseenter', stopAutoPlay);
       slider.addEventListener('mouseleave', startAutoPlay);
+      slider.addEventListener('touchstart', stopAutoPlay, { passive: true });
+      slider.addEventListener('touchend', startAutoPlay, { passive: true });
     }
 
     createDots();
@@ -842,10 +943,13 @@
 
   /* CURSOR GLOW */
   function initCursorGlow() {
-    const glow = $('#cursor-glow');
-    if (!glow) return;
+    if (!cursorGlow) return;
+    if (isTouchDevice()) {
+      cursorGlow.style.display = 'none';
+      return;
+    }
     document.addEventListener('mousemove', function (e) {
-      glow.style.transform = 'translate(' + (e.clientX) + 'px, ' + (e.clientY) + 'px)';
+      cursorGlow.style.transform = 'translate(' + (e.clientX) + 'px, ' + (e.clientY) + 'px)';
     }, { passive: true });
   }
 
@@ -866,11 +970,14 @@
       card.addEventListener('mouseleave', function () {
         card.style.transform = '';
       });
+      if (isTouchDevice()) {
+        addTouchTilt(card, 4);
+      }
     });
   }
 
-  /* AIRA CHAT — RESPONSES */
-  var airaResponses = {
+  /* ---- AIRA CHAT ---- */
+  const airaResponses = {
     'what-is-eduverse': {
       title: 'What is EduVerse 2050?',
       text: '<strong>EduVerse 2050</strong> is a visionary educational ecosystem where artificial intelligence has eliminated every barrier to learning. It is a world where every student \u2014 regardless of location, language, or background \u2014 has access to a personalized AI mentor that adapts to their unique learning style, pace, and goals.<br><br>Powered by <strong>Google\'s Gemini AI</strong>, EduVerse 2050 transcends traditional classrooms through holographic interfaces, immersive virtual reality, real-time language translation, and adaptive curricula that evolve with each learner.<br><br>This is not just an evolution of education \u2014 it is a revolution. <strong>Education Without Boundaries.</strong>',
@@ -923,9 +1030,9 @@
     }
   };
 
-  var airaOffTopic = 'I am <strong>AIRA</strong>, an educational AI mentor focused on <strong>EduVerse 2050</strong>.<br><br>Please ask questions related to:<br>\u2022 EduVerse 2050<br>\u2022 AIRA<br>\u2022 Gemini AI<br>\u2022 Future Education<br>\u2022 Personalized Learning<br>\u2022 Future Classrooms<br><br>You can also select one of the suggested topics above.';
+  const airaOffTopic = 'I am <strong>AIRA</strong>, an educational AI mentor focused on <strong>EduVerse 2050</strong>.<br><br>Please ask questions related to:<br>\u2022 EduVerse 2050<br>\u2022 AIRA<br>\u2022 Gemini AI<br>\u2022 Future Education<br>\u2022 Personalized Learning<br>\u2022 Future Classrooms<br><br>You can also select one of the suggested topics above.';
 
-  var airaAllowedKeywords = [
+  const airaAllowedKeywords = [
     'eduverse', 'aira', 'gemini', 'education', 'learn', 'learning', 'classroom',
     'student', 'teacher', 'future', 'mentor', 'personalized', 'global',
     'innovation', '2050', 'curriculum', 'immersive', 'virtual', 'holographic',
@@ -934,7 +1041,7 @@
     'ai', 'intelligence', 'knowledge', 'path', 'guide', 'assistant', 'academic'
   ];
 
-  var airaQuickTopics = [
+  const airaQuickTopics = [
     { id: 'what-is-eduverse', label: 'What is EduVerse 2050?' },
     { id: 'who-is-aira', label: 'Who is AIRA?' },
     { id: 'why-gemini', label: 'Why Gemini AI?' },
@@ -947,27 +1054,27 @@
     { id: 'vision-2050', label: 'Vision for 2050' }
   ];
 
-  /* AIRA CHAT */
   function initAiraChat() {
-    var chat = $('#aira-chat');
-    var toggleBtn = $('#aira-chat-toggle');
-    var closeBtn = $('#aira-chat-close');
-    var windowEl = $('#aira-chat-window');
-    var messagesEl = $('#aira-chat-messages');
-    var inputEl = $('#aira-chat-input');
-    var sendBtn = $('#aira-chat-send');
+    const chat = $('#aira-chat');
+    const toggleBtn = $('#aira-chat-toggle');
+    const closeBtn = $('#aira-chat-close');
+    const messagesEl = $('#aira-chat-messages');
+    const inputEl = $('#aira-chat-input');
+    const sendBtn = $('#aira-chat-send');
     if (!chat) return;
 
-    var isOpen = false;
-    var isProcessing = false;
+    let isOpen = false;
+    let isProcessing = false;
+    let hasOpened = false;
 
     function openChat() {
       isOpen = true;
+      hasOpened = true;
       chat.classList.add('open');
       chat.setAttribute('aria-hidden', 'false');
       toggleBtn.setAttribute('aria-expanded', 'true');
-      setTimeout(function () { inputEl.focus(); }, 400);
-      if (messagesEl.children.length === 0) {
+      setTimeout(function () { if (inputEl) inputEl.focus(); }, 400);
+      if (messagesEl && messagesEl.children.length === 0) {
         showGreeting();
       }
     }
@@ -977,105 +1084,110 @@
       chat.classList.remove('open');
       chat.setAttribute('aria-hidden', 'true');
       toggleBtn.setAttribute('aria-expanded', 'false');
-      toggleBtn.focus();
+      setTimeout(function () { if (toggleBtn) toggleBtn.focus(); }, 100);
     }
 
     function scrollToBottom() {
-      messagesEl.scrollTop = messagesEl.scrollHeight;
+      if (messagesEl) messagesEl.scrollTop = messagesEl.scrollHeight;
     }
 
     function addMessage(type, content) {
-      var div = document.createElement('div');
+      const div = document.createElement('div');
       div.className = 'aira-message ' + type;
       div.innerHTML = content;
-      messagesEl.appendChild(div);
-      scrollToBottom();
+      if (messagesEl) {
+        messagesEl.appendChild(div);
+        scrollToBottom();
+      }
       return div;
     }
 
     function showTyping() {
-      var div = document.createElement('div');
+      const div = document.createElement('div');
       div.className = 'aira-typing';
       div.id = 'aira-typing-indicator';
-      for (var i = 0; i < 3; i++) {
-        var dot = document.createElement('span');
+      for (let i = 0; i < 3; i++) {
+        const dot = document.createElement('span');
         dot.className = 'aira-typing-dot';
         div.appendChild(dot);
       }
-      messagesEl.appendChild(div);
-      scrollToBottom();
+      if (messagesEl) {
+        messagesEl.appendChild(div);
+        scrollToBottom();
+      }
     }
 
     function hideTyping() {
-      var el = document.getElementById('aira-typing-indicator');
+      const el = document.getElementById('aira-typing-indicator');
       if (el) el.remove();
     }
 
     function showQuickActions() {
-      var container = document.createElement('div');
+      const container = document.createElement('div');
       container.className = 'aira-quick-actions';
       container.id = 'aira-quick-actions';
 
-      for (var i = 0; i < airaQuickTopics.length; i++) {
-        (function (topic) {
-          var btn = document.createElement('button');
-          btn.className = 'aira-quick-btn';
-          btn.textContent = topic.label;
-          btn.setAttribute('data-topic', topic.id);
-          btn.addEventListener('click', function () {
-            handleQuickAction(topic.id);
-          });
-          container.appendChild(btn);
-        })(airaQuickTopics[i]);
+      for (let i = 0; i < airaQuickTopics.length; i++) {
+        const topic = airaQuickTopics[i];
+        const btn = document.createElement('button');
+        btn.className = 'aira-quick-btn';
+        btn.textContent = topic.label;
+        btn.setAttribute('data-topic', topic.id);
+        btn.addEventListener('click', function () {
+          handleQuickAction(topic.id);
+        });
+        container.appendChild(btn);
       }
 
-      messagesEl.appendChild(container);
-      scrollToBottom();
+      if (messagesEl) {
+        messagesEl.appendChild(container);
+        scrollToBottom();
+      }
     }
 
     function removeQuickActions() {
-      var el = document.getElementById('aira-quick-actions');
+      const el = document.getElementById('aira-quick-actions');
       if (el) el.remove();
     }
 
     function showSuggestedTopics(topicIds) {
       if (!topicIds || topicIds.length === 0) return;
-      var container = document.createElement('div');
+      const container = document.createElement('div');
       container.className = 'aira-suggested';
 
-      var label = document.createElement('span');
+      const label = document.createElement('span');
       label.className = 'aira-suggested-label';
       label.textContent = 'Suggested Topics:';
       container.appendChild(label);
 
-      for (var i = 0; i < topicIds.length; i++) {
-        (function (id) {
-          var topic = null;
-          for (var j = 0; j < airaQuickTopics.length; j++) {
-            if (airaQuickTopics[j].id === id) { topic = airaQuickTopics[j]; break; }
-          }
-          if (!topic) return;
-          var btn = document.createElement('button');
-          btn.className = 'aira-suggested-btn';
-          btn.textContent = topic.label;
-          btn.addEventListener('click', function () {
-            handleQuickAction(id);
-          });
-          container.appendChild(btn);
-        })(topicIds[i]);
+      for (let i = 0; i < topicIds.length; i++) {
+        const id = topicIds[i];
+        let topic = null;
+        for (let j = 0; j < airaQuickTopics.length; j++) {
+          if (airaQuickTopics[j].id === id) { topic = airaQuickTopics[j]; break; }
+        }
+        if (!topic) continue;
+        const btn = document.createElement('button');
+        btn.className = 'aira-suggested-btn';
+        btn.textContent = topic.label;
+        btn.addEventListener('click', function () {
+          handleQuickAction(id);
+        });
+        container.appendChild(btn);
       }
 
-      messagesEl.appendChild(container);
-      scrollToBottom();
+      if (messagesEl) {
+        messagesEl.appendChild(container);
+        scrollToBottom();
+      }
     }
 
     function handleQuickAction(topicId) {
       if (isProcessing) return;
-      var response = airaResponses[topicId];
+      const response = airaResponses[topicId];
       if (!response) return;
 
       removeQuickActions();
-
       addMessage('user', response.title);
 
       isProcessing = true;
@@ -1095,22 +1207,21 @@
       if (!text.trim()) return;
       if (isProcessing) return;
 
-      inputEl.value = '';
+      if (inputEl) inputEl.value = '';
       removeQuickActions();
-
       addMessage('user', text);
 
       isProcessing = true;
       setInputState(true);
       showTyping();
 
-      var isRelevant = isQuestionRelevant(text);
-      var matchedTopic = findMatchingTopic(text);
+      const isRelevant = isQuestionRelevant(text);
+      const matchedTopic = findMatchingTopic(text);
 
       setTimeout(function () {
         hideTyping();
         if (matchedTopic) {
-          var response = airaResponses[matchedTopic];
+          const response = airaResponses[matchedTopic];
           addMessage('aira', response.text);
           showSuggestedTopics(response.related);
         } else if (isRelevant) {
@@ -1126,25 +1237,25 @@
     }
 
     function isQuestionRelevant(text) {
-      var lower = text.toLowerCase();
-      for (var i = 0; i < airaAllowedKeywords.length; i++) {
+      const lower = text.toLowerCase();
+      for (let i = 0; i < airaAllowedKeywords.length; i++) {
         if (lower.indexOf(airaAllowedKeywords[i]) !== -1) return true;
       }
       return false;
     }
 
     function findMatchingTopic(text) {
-      var lower = text.toLowerCase();
-      var bestMatch = null;
-      var bestScore = 0;
+      const lower = text.toLowerCase();
+      let bestMatch = null;
+      let bestScore = 0;
 
-      for (var key in airaResponses) {
+      for (const key in airaResponses) {
         if (airaResponses.hasOwnProperty(key)) {
-          var title = airaResponses[key].title.toLowerCase();
-          var score = 0;
-          var words = title.replace(/[2050?]/g, '').split(' ');
-          for (var i = 0; i < words.length; i++) {
-            var w = words[i].toLowerCase().trim();
+          const title = airaResponses[key].title.toLowerCase();
+          let score = 0;
+          const words = title.replace(/[2050?]/g, '').split(' ');
+          for (let i = 0; i < words.length; i++) {
+            const w = words[i].toLowerCase().trim();
             if (w.length > 2 && lower.indexOf(w) !== -1) {
               score++;
             }
@@ -1160,8 +1271,8 @@
     }
 
     function setInputState(disabled) {
-      inputEl.disabled = disabled;
-      sendBtn.disabled = disabled;
+      if (inputEl) inputEl.disabled = disabled;
+      if (sendBtn) sendBtn.disabled = disabled;
     }
 
     function showGreeting() {
@@ -1169,36 +1280,43 @@
       showQuickActions();
     }
 
-    /* EVENT LISTENERS */
-    toggleBtn.addEventListener('click', function () {
-      if (isOpen) {
-        closeChat();
-      } else {
-        openChat();
-      }
-    });
-    closeBtn.addEventListener('click', closeChat);
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', function () {
+        if (isOpen) {
+          closeChat();
+        } else {
+          openChat();
+        }
+      });
+    }
+    if (closeBtn) closeBtn.addEventListener('click', closeChat);
 
-    sendBtn.addEventListener('click', function () {
-      handleTextInput(inputEl.value);
-    });
+    if (sendBtn) {
+      sendBtn.addEventListener('click', function () {
+        if (inputEl) handleTextInput(inputEl.value);
+      });
+    }
 
-    inputEl.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        handleTextInput(inputEl.value);
-      }
-    });
+    if (inputEl) {
+      inputEl.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          handleTextInput(inputEl.value);
+        }
+      });
+    }
 
-    /* ESC to close */
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && isOpen) {
         closeChat();
       }
     });
 
-    /* OPEN ON PAGE LOAD after a brief delay */
-    setTimeout(openChat, 3000);
+    trapFocus(chat, inputEl, closeBtn);
+
+    setTimeout(function () {
+      if (!hasOpened) openChat();
+    }, 4000);
   }
 
   /* INIT */
