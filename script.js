@@ -1,21 +1,12 @@
-/* ============================================================
-   EDUVERSE 2050 — AI-Powered Education
-   Script — All interactive features
-   ============================================================ */
-
 (function () {
   'use strict';
 
-  /* ============================================================
-     DOM REFERENCES
-     ============================================================ */
-  const $ = (sel, ctx = document) => ctx.querySelector(sel);
-  const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
+  const $ = (sel, ctx) => (ctx || document).querySelector(sel);
+  const $$ = (sel, ctx) => [...(ctx || document).querySelectorAll(sel)];
 
   const loadingScreen = $('#loading-screen');
   const navbar = $('#navbar');
   const navToggle = $('.nav-toggle');
-  const navLinks = $('.nav-links');
   const heroSection = $('#hero');
   const particleCanvas = $('#particle-canvas');
   const posterTilt = $('#poster-tilt');
@@ -41,10 +32,12 @@
   const equalizer = $('#equalizer');
   const scrollTopBtn = $('#scroll-top');
   const classroomParallax = $('#classroom-parallax');
+  const scrollProgress = $('#scroll-progress');
+  const testimonialTrack = $('#testimonial-track');
+  const testimonialDots = $('#testimonial-dots');
+  const prevBtn = $('.prev-btn');
+  const nextBtn = $('.next-btn');
 
-  /* ============================================================
-     UTILITY FUNCTIONS
-     ============================================================ */
   function formatTime(seconds) {
     if (isNaN(seconds) || !isFinite(seconds)) return '0:00';
     const m = Math.floor(seconds / 60);
@@ -52,39 +45,39 @@
     return `${m}:${s.toString().padStart(2, '0')}`;
   }
 
-  function lerp(a, b, t) {
-    return a + (b - a) * t;
-  }
-
-  function debounce(fn, ms = 100) {
+  function debounce(fn, ms) {
+    ms = ms || 100;
     let timer;
-    return (...args) => {
+    return function () {
       clearTimeout(timer);
-      timer = setTimeout(() => fn(...args), ms);
+      timer = setTimeout(() => fn.apply(this, arguments), ms);
     };
   }
 
-  /* ============================================================
-     1. LOADING SCREEN
-     ============================================================ */
+  /* LOADING SCREEN */
   function initLoadingScreen() {
     function hideLoading() {
       loadingScreen.classList.add('loaded');
       document.body.classList.remove('loading-active');
     }
-
-    window.addEventListener('load', () => {
-      setTimeout(hideLoading, 2000);
-    });
-
-    if (document.readyState === 'complete') {
-      setTimeout(hideLoading, 2000);
-    }
+    window.addEventListener('load', () => setTimeout(hideLoading, 2000));
+    if (document.readyState === 'complete') setTimeout(hideLoading, 2000);
   }
 
-  /* ============================================================
-     2. PARTICLE SYSTEM
-     ============================================================ */
+  /* SCROLL PROGRESS */
+  function initScrollProgress() {
+    function updateProgress() {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      scrollProgress.style.width = progress + '%';
+      scrollProgress.setAttribute('aria-valuenow', Math.round(progress));
+    }
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    updateProgress();
+  }
+
+  /* PARTICLES */
   function initParticles() {
     if (!particleCanvas) return;
 
@@ -192,26 +185,18 @@
     };
   }
 
-  /* ============================================================
-     3. NAVIGATION
-     ============================================================ */
+  /* NAVIGATION */
   function initNavigation() {
     const mobileMenu = $('.mobile-menu');
     const mobileLinks = $$('.mobile-link');
 
-    /* Scroll effect */
     function onScroll() {
-      if (window.scrollY > 50) {
-        navbar.classList.add('scrolled');
-      } else {
-        navbar.classList.remove('scrolled');
-      }
+      navbar.classList.toggle('scrolled', window.scrollY > 50);
     }
 
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
 
-    /* Mobile menu open */
     function openMenu() {
       mobileMenu.classList.add('open');
       mobileMenu.setAttribute('aria-hidden', 'false');
@@ -221,7 +206,6 @@
       setTimeout(() => mobileLinks[0]?.focus(), 100);
     }
 
-    /* Mobile menu close */
     function closeMenu() {
       mobileMenu.classList.remove('open');
       mobileMenu.setAttribute('aria-hidden', 'true');
@@ -230,7 +214,6 @@
       document.body.style.overflow = '';
     }
 
-    /* Toggle */
     navToggle.addEventListener('click', () => {
       if (mobileMenu.classList.contains('open')) {
         closeMenu();
@@ -240,7 +223,6 @@
       }
     });
 
-    /* Close on link click + smooth scroll */
     mobileLinks.forEach((link) => {
       link.addEventListener('click', (e) => {
         e.preventDefault();
@@ -253,7 +235,6 @@
       });
     });
 
-    /* Close on overlay click */
     mobileMenu.addEventListener('click', (e) => {
       if (e.target === mobileMenu) {
         closeMenu();
@@ -261,7 +242,6 @@
       }
     });
 
-    /* ESC key */
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && mobileMenu.classList.contains('open')) {
         closeMenu();
@@ -269,7 +249,6 @@
       }
     });
 
-    /* Focus trapping */
     mobileMenu.addEventListener('keydown', (e) => {
       if (e.key !== 'Tab') return;
       const focusable = mobileLinks;
@@ -289,7 +268,6 @@
       }
     });
 
-    /* Active section highlighting for both desktop + mobile links */
     const sections = $$('section[id]');
     const observerOptions = {
       rootMargin: '-50% 0px -50% 0px',
@@ -302,7 +280,7 @@
           const id = entry.target.id;
           $$('.nav-link, .mobile-link').forEach((link) => {
             link.classList.remove('active');
-            if (link.getAttribute('href') === `#${id}`) {
+            if (link.getAttribute('href') === '#' + id) {
               link.classList.add('active');
             }
           });
@@ -313,9 +291,7 @@
     sections.forEach((s) => sectionObserver.observe(s));
   }
 
-  /* ============================================================
-     4. SCROLL REVEAL (Intersection Observer)
-     ============================================================ */
+  /* SCROLL REVEAL */
   function initScrollReveal() {
     const els = $$('[data-reveal]');
 
@@ -340,9 +316,7 @@
     els.forEach((el) => observer.observe(el));
   }
 
-  /* ============================================================
-     5. BUTTON RIPPLE EFFECT
-     ============================================================ */
+  /* RIPPLE */
   function initRipple() {
     $$('.btn').forEach((btn) => {
       btn.addEventListener('click', function (e) {
@@ -351,8 +325,8 @@
         const y = e.clientY - rect.top;
         const ripple = document.createElement('span');
         ripple.className = 'ripple';
-        ripple.style.left = `${x}px`;
-        ripple.style.top = `${y}px`;
+        ripple.style.left = x + 'px';
+        ripple.style.top = y + 'px';
         ripple.style.width = ripple.style.height = '10px';
         this.appendChild(ripple);
         setTimeout(() => ripple.remove(), 600);
@@ -360,9 +334,7 @@
     });
   }
 
-  /* ============================================================
-     6. POSTER 3D TILT EFFECT
-     ============================================================ */
+  /* POSTER TILT */
   function initPosterTilt() {
     if (!posterTilt) return;
 
@@ -375,7 +347,7 @@
       const rotateX = ((y - centerY) / centerY) * -8;
       const rotateY = ((x - centerX) / centerX) * 8;
 
-      posterTilt.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+      posterTilt.style.transform = 'perspective(1000px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) scale3d(1.02, 1.02, 1.02)';
     });
 
     posterTilt.addEventListener('mouseleave', () => {
@@ -383,9 +355,7 @@
     });
   }
 
-  /* ============================================================
-     7. POSTER MODAL
-     ============================================================ */
+  /* POSTER MODAL */
   function initPosterModal() {
     if (!posterTilt || !posterModal) return;
 
@@ -412,9 +382,7 @@
     });
   }
 
-  /* ============================================================
-     8. AUDIO PLAYER
-     ============================================================ */
+  /* AUDIO PLAYER */
   function initAudioPlayer() {
     if (!audio) return;
 
@@ -422,10 +390,9 @@
     let isLooping = false;
     let isMuted = false;
 
-    /* Toggle play/pause */
     function togglePlay() {
       if (audio.paused) {
-        audio.play().catch(() => {});
+        audio.play().catch(function () {});
       } else {
         audio.pause();
       }
@@ -439,34 +406,30 @@
       equalizer.classList.toggle('playing', isPlaying);
     }
 
-    /* Update progress */
     function updateProgress() {
       if (!audio.duration) return;
       const pct = (audio.currentTime / audio.duration) * 100;
-      progressFill.style.width = `${pct}%`;
-      progressThumb.style.left = `${pct}%`;
+      progressFill.style.width = pct + '%';
+      progressThumb.style.left = pct + '%';
       currentTimeEl.textContent = formatTime(audio.currentTime);
     }
 
-    /* Set duration display */
     function setDuration() {
       durationEl.textContent = formatTime(audio.duration);
     }
 
-    /* Seek */
     function seek(e) {
       const rect = progressTrack.getBoundingClientRect();
       const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
       audio.currentTime = pct * audio.duration;
     }
 
-    /* Volume */
     function setVolume(e) {
       const rect = volumeTrack.getBoundingClientRect();
       const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
       audio.volume = pct;
-      volumeFill.style.width = `${pct * 100}%`;
-      volumeThumb.style.left = `${pct * 100}%`;
+      volumeFill.style.width = (pct * 100) + '%';
+      volumeThumb.style.left = (pct * 100) + '%';
       if (audio.volume > 0 && isMuted) {
         isMuted = false;
         audio.muted = false;
@@ -493,12 +456,11 @@
       loopBtn.setAttribute('aria-pressed', isLooping);
     }
 
-    /* Events */
     playBtn.addEventListener('click', togglePlay);
 
     audio.addEventListener('play', updatePlayState);
     audio.addEventListener('pause', updatePlayState);
-    audio.addEventListener('ended', () => {
+    audio.addEventListener('ended', function () {
       updatePlayState();
       if (!isLooping) {
         equalizer.classList.remove('playing');
@@ -509,57 +471,54 @@
     audio.addEventListener('durationchange', setDuration);
 
     let isDraggingProgress = false;
-    progressTrack.addEventListener('mousedown', (e) => {
+    progressTrack.addEventListener('mousedown', function (e) {
       isDraggingProgress = true;
       seek(e);
     });
-    document.addEventListener('mousemove', (e) => {
+    document.addEventListener('mousemove', function (e) {
       if (isDraggingProgress) seek(e);
     });
-    document.addEventListener('mouseup', () => {
+    document.addEventListener('mouseup', function () {
       isDraggingProgress = false;
     });
 
     let isDraggingVolume = false;
-    volumeTrack.addEventListener('mousedown', (e) => {
+    volumeTrack.addEventListener('mousedown', function (e) {
       isDraggingVolume = true;
       setVolume(e);
     });
-    document.addEventListener('mousemove', (e) => {
+    document.addEventListener('mousemove', function (e) {
       if (isDraggingVolume) setVolume(e);
     });
-    document.addEventListener('mouseup', () => {
+    document.addEventListener('mouseup', function () {
       isDraggingVolume = false;
     });
 
     muteBtn.addEventListener('click', toggleMute);
     loopBtn.addEventListener('click', toggleLoop);
 
-    /* Touch support for progress */
-    progressTrack.addEventListener('touchstart', (e) => {
+    progressTrack.addEventListener('touchstart', function (e) {
       seek(e.touches[0]);
     });
-    progressTrack.addEventListener('touchmove', (e) => {
+    progressTrack.addEventListener('touchmove', function (e) {
       seek(e.touches[0]);
     });
 
-    /* Touch support for volume */
-    volumeTrack.addEventListener('touchstart', (e) => {
+    volumeTrack.addEventListener('touchstart', function (e) {
       setVolume(e.touches[0]);
     });
-    volumeTrack.addEventListener('touchmove', (e) => {
+    volumeTrack.addEventListener('touchmove', function (e) {
       setVolume(e.touches[0]);
     });
 
-    /* Keyboard accessibility */
-    audio.addEventListener('keydown', (e) => {
+    audio.addEventListener('keydown', function (e) {
       if (e.key === ' ' || e.key === 'Spacebar') {
         e.preventDefault();
         togglePlay();
       }
     });
 
-    document.addEventListener('keydown', (e) => {
+    document.addEventListener('keydown', function (e) {
       if (e.key === ' ' || e.key === 'Spacebar') {
         const active = document.activeElement;
         const isBtn = active && (active.tagName === 'BUTTON' || active.tagName === 'A' || active.tagName === 'INPUT');
@@ -570,8 +529,7 @@
       }
     });
 
-    /* Audio error handling */
-    audio.addEventListener('error', () => {
+    audio.addEventListener('error', function () {
       playBtn.style.opacity = '0.5';
       playBtn.style.cursor = 'not-allowed';
       playBtn.setAttribute('aria-label', 'Audio unavailable');
@@ -582,14 +540,11 @@
       $('.soundtrack-content').appendChild(msg);
     }, { once: true });
 
-    /* Initial state */
     setDuration();
     updateMuteState();
   }
 
-  /* ============================================================
-     9. ANIMATED COUNTERS (Intersection Observer)
-     ============================================================ */
+  /* COUNTERS */
   function initCounters() {
     const counters = $$('.stat-number');
 
@@ -614,8 +569,8 @@
   function animateCounter(el, target, suffix) {
     const duration = 2000;
     const start = performance.now();
-    /* Use internal multiplier for smooth 1B+ animation */
     const internalTarget = target === 1 ? 1000 : target;
+    const is10X = target === 10 && suffix === 'X';
 
     function update(now) {
       const elapsed = now - start;
@@ -624,8 +579,11 @@
       const current = Math.round(eased * internalTarget);
 
       if (target === 1 && suffix === 'B+') {
-        /* Animate as millions, then final display as 1B+ */
         el.textContent = progress < 1 ? current + 'M' : '1B+';
+      } else if (is10X) {
+        const displayVal = Math.round(eased * 10);
+        el.textContent = displayVal + 'X';
+        if (progress >= 1) el.textContent = '10X';
       } else {
         el.textContent = current + suffix;
       }
@@ -633,8 +591,8 @@
       if (progress < 1) {
         requestAnimationFrame(update);
       } else {
-        /* Ensure exact final value */
         if (target === 1 && suffix === 'B+') el.textContent = '1B+';
+        else if (is10X) el.textContent = '10X';
         else el.textContent = target + suffix;
       }
     }
@@ -642,29 +600,21 @@
     requestAnimationFrame(update);
   }
 
-  /* ============================================================
-     10. SCROLL TO TOP
-     ============================================================ */
+  /* SCROLL TO TOP */
   function initScrollTop() {
     function checkScroll() {
-      if (window.scrollY > 500) {
-        scrollTopBtn.classList.add('visible');
-      } else {
-        scrollTopBtn.classList.remove('visible');
-      }
+      scrollTopBtn.classList.toggle('visible', window.scrollY > 500);
     }
 
     window.addEventListener('scroll', checkScroll, { passive: true });
     checkScroll();
 
-    scrollTopBtn.addEventListener('click', () => {
+    scrollTopBtn.addEventListener('click', function () {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
 
-  /* ============================================================
-     11. CLASSROOM PARALLAX
-     ============================================================ */
+  /* CLASSROOM PARALLAX */
   function initClassroomParallax() {
     if (!classroomParallax) return;
 
@@ -681,56 +631,49 @@
 
     observer.observe(classroomParallax);
 
-    window.addEventListener('scroll', () => {
+    window.addEventListener('scroll', function () {
       if (!classroomParallax.classList.contains('parallax-active')) return;
       const rect = classroomParallax.getBoundingClientRect();
       const speed = 0.05;
       const yPos = (rect.top - window.innerHeight) * speed;
       const img = classroomParallax.querySelector('.classroom-image');
       if (img) {
-        img.style.transform = `translateY(${yPos}px) scale(1.05)`;
+        img.style.transform = 'translateY(' + yPos + 'px) scale(1.05)';
       }
     }, { passive: true });
   }
 
-  /* ============================================================
-     12. MOUSE PARALLAX FOR HERO
-     ============================================================ */
+  /* HERO PARALLAX */
   function initHeroParallax() {
     const heroContent = $('.hero-content');
 
-    heroSection.addEventListener('mousemove', (e) => {
+    heroSection.addEventListener('mousemove', function (e) {
       const rect = heroSection.getBoundingClientRect();
       const x = (e.clientX - rect.left) / rect.width - 0.5;
       const y = (e.clientY - rect.top) / rect.height - 0.5;
 
-      heroContent.style.transform = `translate(${x * 15}px, ${y * 15}px)`;
+      heroContent.style.transform = 'translate(' + (x * 15) + 'px, ' + (y * 15) + 'px)';
     });
 
-    heroSection.addEventListener('mouseleave', () => {
+    heroSection.addEventListener('mouseleave', function () {
       heroContent.style.transform = 'translate(0, 0)';
     });
   }
 
-  /* ============================================================
-     13. EQUALIZER BARS INIT
-     ============================================================ */
+  /* EQUALIZER */
   function initEqualizer() {
     const bars = $$('.eq-bar');
-    bars.forEach((bar) => {
-      const height = Math.random() * 36 + 12;
-      bar.style.height = `${height}px`;
+    bars.forEach(function (bar) {
+      bar.style.height = (Math.random() * 36 + 12) + 'px';
     });
   }
 
-  /* ============================================================
-     14. FEATURE CARDS TILT
-     ============================================================ */
+  /* FEATURE CARDS TILT */
   function initFeatureCards() {
     const cards = $$('.feature-card');
 
-    cards.forEach((card) => {
-      card.addEventListener('mousemove', (e) => {
+    cards.forEach(function (card) {
+      card.addEventListener('mousemove', function (e) {
         const rect = card.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
@@ -739,25 +682,137 @@
         const rotateX = ((y - centerY) / centerY) * -4;
         const rotateY = ((x - centerX) / centerX) * 4;
 
-        card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
+        card.style.transform = 'perspective(800px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) translateY(-4px)';
       });
 
-      card.addEventListener('mouseleave', () => {
+      card.addEventListener('mouseleave', function () {
         card.style.transform = '';
       });
     });
   }
 
-  /* ============================================================
-     15. SET INITIAL BODY OVERFLOW
-     ============================================================ */
+  /* TESTIMONIAL SLIDER */
+  function initTestimonials() {
+    if (!testimonialTrack) return;
+
+    const slides = $$('.testimonial-card', testimonialTrack);
+    const totalSlides = slides.length;
+    let currentIndex = 0;
+    let autoPlayInterval;
+    const autoPlayDelay = 5000;
+
+    function createDots() {
+      if (!testimonialDots) return;
+      testimonialDots.innerHTML = '';
+      slides.forEach(function (_, i) {
+        const dot = document.createElement('button');
+        dot.className = 'testimonial-dot' + (i === 0 ? ' active' : '');
+        dot.setAttribute('role', 'tab');
+        dot.setAttribute('aria-label', 'Go to testimonial ' + (i + 1));
+        dot.addEventListener('click', function () {
+          goToSlide(i);
+          resetAutoPlay();
+        });
+        testimonialDots.appendChild(dot);
+      });
+    }
+
+    function goToSlide(index) {
+      currentIndex = index;
+      const offset = -currentIndex * 100;
+      testimonialTrack.style.transform = 'translateX(' + offset + '%)';
+
+      const dots = $$('.testimonial-dot');
+      dots.forEach(function (d, i) {
+        d.classList.toggle('active', i === currentIndex);
+      });
+    }
+
+    function nextSlide() {
+      currentIndex = (currentIndex + 1) % totalSlides;
+      goToSlide(currentIndex);
+    }
+
+    function prevSlide() {
+      currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+      goToSlide(currentIndex);
+    }
+
+    function startAutoPlay() {
+      stopAutoPlay();
+      autoPlayInterval = setInterval(nextSlide, autoPlayDelay);
+    }
+
+    function stopAutoPlay() {
+      clearInterval(autoPlayInterval);
+    }
+
+    function resetAutoPlay() {
+      startAutoPlay();
+    }
+
+    if (prevBtn) prevBtn.addEventListener('click', function () { prevSlide(); resetAutoPlay(); });
+    if (nextBtn) nextBtn.addEventListener('click', function () { nextSlide(); resetAutoPlay(); });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowLeft') { prevSlide(); resetAutoPlay(); }
+      if (e.key === 'ArrowRight') { nextSlide(); resetAutoPlay(); }
+    });
+
+    const slider = $('.testimonial-slider');
+    if (slider) {
+      slider.addEventListener('mouseenter', stopAutoPlay);
+      slider.addEventListener('mouseleave', startAutoPlay);
+    }
+
+    createDots();
+    startAutoPlay();
+  }
+
+  /* DAY TIMELINE INTERACTION */
+  function initDayTimeline() {
+    const entries = $$('.day-entry');
+    entries.forEach(function (entry) {
+      entry.addEventListener('mouseenter', function () {
+        const dot = entry.querySelector('.day-dot');
+        if (dot) {
+          dot.style.transform = 'scale(1.5)';
+          dot.style.boxShadow = '0 0 40px rgba(0, 229, 255, 0.6)';
+        }
+      });
+      entry.addEventListener('mouseleave', function () {
+        const dot = entry.querySelector('.day-dot');
+        if (dot) {
+          dot.style.transform = '';
+          dot.style.boxShadow = '';
+        }
+      });
+    });
+  }
+
+  /* SECTION TRANSITION OBSERVER */
+  function initSectionTransitions() {
+    const sections = $$('.section');
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('section-transition', 'revealed');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.05 }
+    );
+    sections.forEach((s) => observer.observe(s));
+  }
+
+  /* INIT */
   document.body.classList.add('loading-active');
 
-  /* ============================================================
-     INIT ALL
-     ============================================================ */
   function init() {
     initLoadingScreen();
+    initScrollProgress();
     initParticles();
     initNavigation();
     initScrollReveal();
@@ -771,6 +826,9 @@
     initHeroParallax();
     initEqualizer();
     initFeatureCards();
+    initTestimonials();
+    initDayTimeline();
+    initSectionTransitions();
   }
 
   if (document.readyState === 'loading') {

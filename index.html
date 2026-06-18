@@ -5,42 +5,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="EduVerse 2050 – AI-Powered Education Without Boundaries. Experience the future of learning through artificial intelligence, immersive technologies, and personalized AI mentors.">
   <meta name="keywords" content="EduVerse, AI Education, Future Learning, Gemini AI, Virtual Reality Classrooms, Personalized Learning">
-  <meta name="author" content="EduVerse Team">
+  <meta name="author" content="Team InnoVerse">
   <meta name="robots" content="index, follow">
 
-  <!-- Open Graph -->
   <meta property="og:title" content="EduVerse 2050 – AI-Powered Education">
   <meta property="og:description" content="Education Without Boundaries, Powered by AI. Experience the future of learning.">
   <meta property="og:type" content="website">
   <meta property="og:image" content="assets/poster-main.jpeg">
   <meta property="og:url" content="https://eduverse2050.netlify.app">
 
-  <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="EduVerse 2050 – AI-Powered Education">
   <meta name="twitter:description" content="Education Without Boundaries, Powered by AI.">
   <meta name="twitter:image" content="assets/poster-main.jpeg">
 
-  <!-- Preconnect -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-  <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230B1120'/%3E%3Ctext x='16' y='22' font-family='Arial' font-weight='bold' font-size='18' fill='%2300E5FF' text-anchor='middle'%3EE%3C/text%3E%3C/svg%3E">
   <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
   <link rel="apple-touch-icon" href="assets/favicon.ico">
 
-  <!-- Styles -->
   <link rel="stylesheet" href="style.css">
 
   <title>EduVerse 2050 – AI-Powered Education Without Boundaries</title>
 </head>
 <body>
 
-  <!-- ==================== LOADING SCREEN ==================== -->
+  <div id="scroll-progress" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+
+  <!-- LOADING SCREEN -->
   <div id="loading-screen" role="status" aria-label="Loading">
     <div class="loader-content">
       <div class="loader-logo">
@@ -54,7 +49,7 @@
     </div>
   </div>
 
-  <!-- ==================== NAVIGATION ==================== -->
+  <!-- NAVIGATION -->
   <nav id="navbar" role="navigation" aria-label="Main navigation">
     <div class="nav-container">
       <a href="#hero" class="nav-logo" aria-label="EduVerse Home">
@@ -68,7 +63,7 @@
       </button>
       <ul class="nav-links" role="menubar">
         <li role="none"><a href="#poster" role="menuitem" class="nav-link">Poster</a></li>
-        <li role="none"><a href="#soundtrack" role="menuitem" class="nav-link">Soundtrack</a></li>
+        <li role="none"><a href="#aira" role="menuitem" class="nav-link">AIRA</a></li>
         <li role="none"><a href="#story" role="menuitem" class="nav-link">Story</a></li>
         <li role="none"><a href="#features" role="menuitem" class="nav-link">Features</a></li>
         <li role="none"><a href="#stats" role="menuitem" class="nav-link">Impact</a></li>
@@ -77,7 +72,7 @@
       <div class="mobile-menu" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Navigation menu">
         <div class="mobile-menu-nav">
           <a href="#poster" class="mobile-link" style="--i:0">Poster</a>
-          <a href="#soundtrack" class="mobile-link" style="--i:1">Soundtrack</a>
+          <a href="#aira" class="mobile-link" style="--i:1">AIRA</a>
           <a href="#story" class="mobile-link" style="--i:2">Story</a>
           <a href="#features" class="mobile-link" style="--i:3">Features</a>
           <a href="#stats" class="mobile-link" style="--i:4">Impact</a>
@@ -87,7 +82,7 @@
     </div>
   </nav>
 
-  <!-- ==================== HERO SECTION ==================== -->
+  <!-- HERO SECTION -->
   <section id="hero" class="section hero" aria-label="Hero">
     <canvas id="particle-canvas" aria-hidden="true"></canvas>
     <div class="hero-gradient" aria-hidden="true"></div>
@@ -123,7 +118,77 @@
     </div>
   </section>
 
-  <!-- ==================== AI POSTER SECTION ==================== -->
+  <!-- AIRA SECTION — The AI Mentor of 2050 -->
+  <section id="aira" class="section aira-section" aria-label="Meet AIRA">
+    <div class="container">
+      <div class="section-header" data-reveal="fade-up">
+        <span class="section-badge">Meet Your AI Mentor</span>
+        <h2 class="section-title">Meet AIRA</h2>
+        <p class="section-subtitle">The AI Mentor of 2050</p>
+      </div>
+      <div class="aira-wrapper">
+        <div class="aira-hologram" data-reveal="fade-up">
+          <div class="hologram-ring ring-outer"></div>
+          <div class="hologram-ring ring-mid"></div>
+          <div class="hologram-ring ring-inner"></div>
+          <div class="hologram-core" aria-hidden="true">
+            <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2a4 4 0 0 1 4 4v2a4 4 0 0 1-8 0V6a4 4 0 0 1 4-4z"/>
+              <path d="M20 22v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+              <path d="M12 14v4"/>
+              <path d="M9 18h6"/>
+              <circle cx="12" cy="12" r="2" fill="currentColor" opacity="0.3"/>
+              <path d="M12 10v4" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <div class="hologram-pulse"></div>
+          <div class="hologram-orbit"><div class="orbit-dot"></div></div>
+          <div class="hologram-orbit orbit-reverse"><div class="orbit-dot"></div></div>
+        </div>
+        <div class="aira-info" data-reveal="fade-up" data-delay="200">
+          <p class="aira-subtitle accent-text">A.R.T.I.F.I.C.I.A.L &nbsp;I.N.T.E.L.L.I.G.E.N.C.E &nbsp;R.E.S.P.O.N.S.I.V.E &nbsp;A.C.A.D.E.M.I.C &nbsp;A.S.S.I.S.T.A.N.T</p>
+          <p class="aira-desc">
+            AIRA is an advanced AI mentor that accompanies every learner throughout their educational journey. She understands your strengths, weaknesses, language, learning style, goals, and dreams — adapting in real-time to help you reach your full potential.
+          </p>
+          <div class="aira-features">
+            <div class="aira-feature" data-reveal="fade-up" data-delay="100">
+              <span class="aira-feature-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+              </span>
+              <span class="aira-feature-text">Personalized Learning</span>
+            </div>
+            <div class="aira-feature" data-reveal="fade-up" data-delay="200">
+              <span class="aira-feature-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </span>
+              <span class="aira-feature-text">Real-Time Guidance</span>
+            </div>
+            <div class="aira-feature" data-reveal="fade-up" data-delay="300">
+              <span class="aira-feature-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8l6 6"/><path d="M4 14l4 4 2-4"/><path d="M14 4l6 6"/><path d="M12 2v4"/><path d="M12 18v4"/><path d="M4 12H2"/><path d="M22 12h-2"/></svg>
+              </span>
+              <span class="aira-feature-text">Multilingual Teaching</span>
+            </div>
+            <div class="aira-feature" data-reveal="fade-up" data-delay="400">
+              <span class="aira-feature-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 12 12 16 14"/></svg>
+              </span>
+              <span class="aira-feature-text">24/7 Availability</span>
+            </div>
+            <div class="aira-feature" data-reveal="fade-up" data-delay="500">
+              <span class="aira-feature-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              </span>
+              <span class="aira-feature-text">Adaptive Curriculum</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI POSTER SECTION -->
   <section id="poster" class="section poster-section" aria-label="AI Poster">
     <div class="container">
       <div class="section-header" data-reveal="fade-up">
@@ -160,7 +225,6 @@
       </div>
     </div>
 
-    <!-- Poster Modal -->
     <div id="poster-modal" class="modal" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Poster preview">
       <div class="modal-overlay" id="modal-overlay"></div>
       <div class="modal-content">
@@ -170,7 +234,57 @@
     </div>
   </section>
 
-  <!-- ==================== SOUNDTRACK SECTION ==================== -->
+  <!-- THE PROBLEM VS EDUVERSE 2050 -->
+  <section id="comparison" class="section comparison-section" aria-label="Education Comparison">
+    <div class="container">
+      <div class="section-header" data-reveal="fade-up">
+        <h2 class="section-title">The Problem With Today's Education</h2>
+        <p class="section-subtitle">And how EduVerse 2050 changes everything</p>
+      </div>
+      <div class="comparison-grid">
+        <div class="comparison-col comparison-today" data-reveal="fade-right">
+          <div class="comparison-badge today-badge">Today</div>
+          <div class="comparison-items">
+            <div class="comparison-item">
+              <span class="comparison-icon cross">✕</span>
+              <span>One-size-fits-all learning</span>
+            </div>
+            <div class="comparison-item">
+              <span class="comparison-icon cross">✕</span>
+              <span>Limited accessibility</span>
+            </div>
+            <div class="comparison-item">
+              <span class="comparison-icon cross">✕</span>
+              <span>Language barriers</span>
+            </div>
+          </div>
+        </div>
+        <div class="comparison-divider" data-reveal="fade-up">
+          <span class="divider-arrow">→</span>
+          <div class="divider-line"></div>
+        </div>
+        <div class="comparison-col comparison-future" data-reveal="fade-left">
+          <div class="comparison-badge future-badge">EduVerse 2050</div>
+          <div class="comparison-items">
+            <div class="comparison-item">
+              <span class="comparison-icon check">✓</span>
+              <span>Personalized education</span>
+            </div>
+            <div class="comparison-item">
+              <span class="comparison-icon check">✓</span>
+              <span>Global access</span>
+            </div>
+            <div class="comparison-item">
+              <span class="comparison-icon check">✓</span>
+              <span>AI-powered mentorship</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOUNDTRACK SECTION -->
   <section id="soundtrack" class="section soundtrack-section" aria-label="Soundtrack">
     <div class="container">
       <div class="section-header" data-reveal="fade-up">
@@ -230,7 +344,120 @@
     <audio id="audio-player" preload="metadata" src="assets/music/First_Light_of_day.mp3.mpeg"></audio>
   </section>
 
-  <!-- ==================== STORY SECTION ==================== -->
+  <!-- A DAY IN THE LIFE OF A STUDENT IN 2050 -->
+  <section id="day-timeline" class="section day-section" aria-label="A Day in the Life">
+    <div class="container">
+      <div class="section-header" data-reveal="fade-up">
+        <h2 class="section-title">A Day in the Life of a Student in 2050</h2>
+        <p class="section-subtitle">Every moment optimized for maximum learning</p>
+      </div>
+      <div class="day-timeline">
+        <div class="day-line" aria-hidden="true"></div>
+        <div class="day-entry" data-reveal="fade-up">
+          <div class="day-time">
+            <span class="day-time-num">07:00</span>
+            <span class="day-time-ampm">AM</span>
+          </div>
+          <div class="day-dot" aria-hidden="true"></div>
+          <div class="day-card">
+            <div class="day-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div class="day-content">
+              <h3 class="day-title">AIRA Prepares Personalized Schedule</h3>
+              <p class="day-desc">Your AI mentor analyzes yesterday's progress and plans an optimized learning path for today, focusing on areas that need reinforcement.</p>
+            </div>
+          </div>
+        </div>
+        <div class="day-entry" data-reveal="fade-up">
+          <div class="day-time">
+            <span class="day-time-num">09:00</span>
+            <span class="day-time-ampm">AM</span>
+          </div>
+          <div class="day-dot" aria-hidden="true"></div>
+          <div class="day-card">
+            <div class="day-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9"/><path d="M21 3v6h-6"/><path d="M21 3l-7 7"/><path d="M3 12a9 9 0 0 1 9-9"/></svg>
+            </div>
+            <div class="day-content">
+              <h3 class="day-title">Immersive Virtual Classroom</h3>
+              <p class="day-desc">Step into a holographic learning environment where complex concepts come alive as interactive 3D objects you can explore from every angle.</p>
+            </div>
+          </div>
+        </div>
+        <div class="day-entry" data-reveal="fade-up">
+          <div class="day-time">
+            <span class="day-time-num">11:00</span>
+            <span class="day-time-ampm">AM</span>
+          </div>
+          <div class="day-dot" aria-hidden="true"></div>
+          <div class="day-card">
+            <div class="day-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            </div>
+            <div class="day-content">
+              <h3 class="day-title">AI Identifies Weak Concepts</h3>
+              <p class="day-desc">AIRA detects struggling areas in real-time and automatically adjusts the lesson to provide targeted practice and alternative explanations.</p>
+            </div>
+          </div>
+        </div>
+        <div class="day-entry" data-reveal="fade-up">
+          <div class="day-time">
+            <span class="day-time-num">02:00</span>
+            <span class="day-time-ampm">PM</span>
+          </div>
+          <div class="day-dot" aria-hidden="true"></div>
+          <div class="day-card">
+            <div class="day-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            </div>
+            <div class="day-content">
+              <h3 class="day-title">Global Collaborative Learning</h3>
+              <p class="day-desc">Connect with students from around the world in real-time collaborative sessions, breaking down cultural and geographic barriers.</p>
+            </div>
+          </div>
+        </div>
+        <div class="day-entry" data-reveal="fade-up">
+          <div class="day-time">
+            <span class="day-time-num">05:00</span>
+            <span class="day-time-ampm">PM</span>
+          </div>
+          <div class="day-dot" aria-hidden="true"></div>
+          <div class="day-card">
+            <div class="day-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a4 4 0 0 1 4 4v2a4 4 0 0 1-8 0V6a4 4 0 0 1 4-4z"/><path d="M20 22v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
+            <div class="day-content">
+              <h3 class="day-title">Hands-On Simulation & Practice</h3>
+              <p class="day-desc">Apply knowledge through realistic AI-powered simulations that adapt to your skill level, making learning active, not passive.</p>
+            </div>
+          </div>
+        </div>
+        <div class="day-entry" data-reveal="fade-up">
+          <div class="day-time">
+            <span class="day-time-num">08:00</span>
+            <span class="day-time-ampm">PM</span>
+          </div>
+          <div class="day-dot" aria-hidden="true"></div>
+          <div class="day-card">
+            <div class="day-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            </div>
+            <div class="day-content">
+              <h3 class="day-title">AI Generates Adaptive Revision Plan</h3>
+              <p class="day-desc">AIRA creates a personalized revision schedule based on today's learning, reinforcing key concepts while you rest — maximizing long-term retention.</p>
+            </div>
+          </div>
+        </div>
+        <div class="day-outcome" data-reveal="fade-up">
+          <span class="day-outcome-icon">✦</span>
+          <span>Maximum Learning Efficiency</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STORY SECTION — The Journey -->
   <section id="story" class="section story-section" aria-label="Story Timeline">
     <div class="container">
       <div class="section-header" data-reveal="fade-up">
@@ -267,7 +494,52 @@
     </div>
   </section>
 
-  <!-- ==================== FUTURE FEATURES SECTION ==================== -->
+  <!-- THE EVOLUTION OF EDUCATION -->
+  <section id="evolution" class="section evolution-section" aria-label="Evolution of Education">
+    <div class="container">
+      <div class="section-header" data-reveal="fade-up">
+        <h2 class="section-title">The Evolution of Education</h2>
+        <p class="section-subtitle">From traditional classrooms to the EduVerse revolution</p>
+      </div>
+      <div class="evo-timeline">
+        <div class="evo-line" aria-hidden="true"></div>
+        <div class="evo-milestone" data-reveal="fade-up">
+          <div class="evo-year">2025</div>
+          <div class="evo-content">
+            <h3 class="evo-title">Traditional Education</h3>
+            <p class="evo-desc">Classroom-based learning with limited personalization. Teachers manage large groups with standardized curricula.</p>
+          </div>
+          <div class="evo-dot" aria-hidden="true"></div>
+        </div>
+        <div class="evo-milestone" data-reveal="fade-up">
+          <div class="evo-year">2030</div>
+          <div class="evo-content">
+            <h3 class="evo-title">AI Assisted Learning</h3>
+            <p class="evo-desc">Intelligent tutoring systems begin augmenting human teachers, offering personalized pacing and instant feedback.</p>
+          </div>
+          <div class="evo-dot" aria-hidden="true"></div>
+        </div>
+        <div class="evo-milestone" data-reveal="fade-up">
+          <div class="evo-year">2040</div>
+          <div class="evo-content">
+            <h3 class="evo-title">Immersive Learning Ecosystems</h3>
+            <p class="evo-desc">Virtual and augmented reality create rich learning environments where students interact with knowledge in three dimensions.</p>
+          </div>
+          <div class="evo-dot" aria-hidden="true"></div>
+        </div>
+        <div class="evo-milestone" data-reveal="fade-up">
+          <div class="evo-year">2050</div>
+          <div class="evo-content">
+            <h3 class="evo-title">EduVerse Revolution</h3>
+            <p class="evo-desc">AI mentors guide every learner personally. Language, location, and resources are no longer barriers to quality education.</p>
+          </div>
+          <div class="evo-dot" aria-hidden="true"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FUTURE FEATURES SECTION -->
   <section id="features" class="section features-section" aria-label="Future Features">
     <div class="container">
       <div class="section-header" data-reveal="fade-up">
@@ -332,11 +604,99 @@
     </div>
   </section>
 
-  <!-- ==================== FUTURE CLASSROOM SECTION ==================== -->
+  <!-- VOICES FROM 2050 (Testimonials) -->
+  <section id="testimonials" class="section testimonials-section" aria-label="Voices From 2050">
+    <div class="container">
+      <div class="section-header" data-reveal="fade-up">
+        <h2 class="section-title">Voices From 2050</h2>
+        <p class="section-subtitle">Hear from students whose lives have been transformed</p>
+      </div>
+      <div class="testimonial-slider" data-reveal="fade-up" data-delay="200" role="region" aria-label="Testimonial carousel" aria-roledescription="carousel">
+        <div class="testimonial-track" id="testimonial-track">
+          <div class="testimonial-card" role="group" aria-roledescription="slide" aria-label="Testimonial 1">
+            <div class="testimonial-quote">"</div>
+            <p class="testimonial-text">AIRA helped me learn faster than ever before. What used to take months now takes days. The personalized approach made all the difference.</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              </div>
+              <div class="testimonial-meta">
+                <span class="testimonial-name">Student, Tokyo</span>
+                <span class="testimonial-role">Class of 2050</span>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card" role="group" aria-roledescription="slide" aria-label="Testimonial 2">
+            <div class="testimonial-quote">"</div>
+            <p class="testimonial-text">Education became accessible regardless of my location. Living in a remote village no longer means limited opportunities. The world is my classroom now.</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              </div>
+              <div class="testimonial-meta">
+                <span class="testimonial-name">Student, Nairobi</span>
+                <span class="testimonial-role">Class of 2050</span>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card" role="group" aria-roledescription="slide" aria-label="Testimonial 3">
+            <div class="testimonial-quote">"</div>
+            <p class="testimonial-text">Learning finally adapted to me. Not the other way around. For the first time in my life, I feel like my education was designed just for me.</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              </div>
+              <div class="testimonial-meta">
+                <span class="testimonial-name">Student, São Paulo</span>
+                <span class="testimonial-role">Class of 2050</span>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card" role="group" aria-roledescription="slide" aria-label="Testimonial 4">
+            <div class="testimonial-quote">"</div>
+            <p class="testimonial-text">The language barrier disappeared overnight. I learn in my native tongue with real-time translations that make global collaboration effortless.</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              </div>
+              <div class="testimonial-meta">
+                <span class="testimonial-name">Student, Berlin</span>
+                <span class="testimonial-role">Class of 2050</span>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card" role="group" aria-roledescription="slide" aria-label="Testimonial 5">
+            <div class="testimonial-quote">"</div>
+            <p class="testimonial-text">I used to struggle with math. Now AIRA guides me through every problem with patience and infinite adaptability. I've never felt more confident.</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              </div>
+              <div class="testimonial-meta">
+                <span class="testimonial-name">Student, Mumbai</span>
+                <span class="testimonial-role">Class of 2050</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-controls">
+          <button class="testimonial-btn prev-btn" aria-label="Previous testimonial">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <div class="testimonial-dots" id="testimonial-dots" role="tablist" aria-label="Testimonial navigation"></div>
+          <button class="testimonial-btn next-btn" aria-label="Next testimonial">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FUTURE CLASSROOM SECTION (Cinematic Upgrade) -->
   <section id="classroom" class="section classroom-section" aria-label="Future Classroom">
     <div class="container">
       <div class="section-header" data-reveal="fade-up">
-        <h2 class="section-title">Classroom of Tomorrow</h2>
+        <h2 class="section-title">Future Classroom Experience</h2>
         <p class="section-subtitle">Where learning comes alive</p>
       </div>
       <div class="classroom-wrapper" data-reveal="fade-up" data-delay="200">
@@ -351,6 +711,18 @@
               id="classroom-img"
               onerror="this.parentElement.classList.add('classroom-fallback'); this.style.display='none';"
             >
+            <div class="classroom-overlay">
+              <div class="classroom-overlay-content">
+                <h3 class="classroom-overlay-title">Imagine a classroom where:</h3>
+                <ul class="classroom-overlay-list">
+                  <li><span class="overlay-bullet">•</span> AI understands every learner</li>
+                  <li><span class="overlay-bullet">•</span> Knowledge appears in holographic form</li>
+                  <li><span class="overlay-bullet">•</span> Language is never a barrier</li>
+                  <li><span class="overlay-bullet">•</span> Learning adapts automatically</li>
+                  <li><span class="overlay-bullet">•</span> Education becomes universal</li>
+                </ul>
+              </div>
+            </div>
             <div class="classroom-fallback-content">
               <div class="fallback-grid classroom-grid"></div>
               <div class="fallback-arc"></div>
@@ -369,7 +741,7 @@
     </div>
   </section>
 
-  <!-- ==================== IMPACT STATISTICS SECTION ==================== -->
+  <!-- IMPACT STATISTICS SECTION (Upgraded) -->
   <section id="stats" class="section stats-section" aria-label="Impact Statistics">
     <div class="container">
       <div class="section-header" data-reveal="fade-up">
@@ -380,7 +752,7 @@
         <div class="stat-card" data-reveal="fade-up" data-delay="100">
           <div class="stat-glow"></div>
           <span class="stat-number" data-target="1" data-suffix="B+">0</span>
-          <span class="stat-label">Students Empowered</span>
+          <span class="stat-label">Students Connected</span>
         </div>
         <div class="stat-card" data-reveal="fade-up" data-delay="200">
           <div class="stat-glow"></div>
@@ -390,18 +762,23 @@
         <div class="stat-card" data-reveal="fade-up" data-delay="300">
           <div class="stat-glow"></div>
           <span class="stat-number" data-target="24" data-suffix="/7">0</span>
-          <span class="stat-label">AI Assistance</span>
+          <span class="stat-label">AI Mentor Availability</span>
         </div>
         <div class="stat-card" data-reveal="fade-up" data-delay="400">
           <div class="stat-glow"></div>
           <span class="stat-number" data-target="100" data-suffix="%">0</span>
-          <span class="stat-label">Accessible Learning</span>
+          <span class="stat-label">Personalized Learning</span>
+        </div>
+        <div class="stat-card" data-reveal="fade-up" data-delay="500">
+          <div class="stat-glow"></div>
+          <span class="stat-number" data-target="10" data-suffix="X">0</span>
+          <span class="stat-label">Faster Concept Understanding</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ==================== TEAM SECTION ==================== -->
+  <!-- TEAM SECTION -->
   <section id="team" class="section team-section" aria-label="Team">
     <div class="container">
       <div class="section-header" data-reveal="fade-up">
@@ -470,7 +847,7 @@
     </div>
   </section>
 
-  <!-- ==================== QUOTE SECTION ==================== -->
+  <!-- QUOTE SECTION (Cinematic Upgrade) -->
   <section id="quote" class="section quote-section" aria-label="Quote">
     <div class="container">
       <div class="quote-content" data-reveal="fade-up">
@@ -480,11 +857,13 @@
         <blockquote class="quote-text">
           "Education without boundaries, powered by AI."
         </blockquote>
+        <p class="quote-subtitle">A vision imagined by Team InnoVerse</p>
+        <div class="quote-divider"></div>
       </div>
     </div>
   </section>
 
-  <!-- ==================== FOOTER ==================== -->
+  <!-- FOOTER (Upgraded) -->
   <footer class="footer" role="contentinfo">
     <div class="container">
       <div class="footer-content">
@@ -494,39 +873,44 @@
             <span class="footer-logo-text">EduVerse 2050</span>
           </div>
           <p class="footer-desc">Education Without Boundaries, Powered by AI.</p>
+          <p class="footer-vision">EduVerse 2050 is our vision of a future where artificial intelligence removes every barrier to learning and empowers every student around the globe.</p>
         </div>
         <div class="footer-links">
           <div class="footer-col">
             <h4 class="footer-heading">Navigate</h4>
-            <a href="#poster">Poster</a>
-            <a href="#soundtrack">Soundtrack</a>
+            <a href="#aira">AIRA</a>
             <a href="#story">Story</a>
             <a href="#features">Features</a>
+            <a href="#stats">Impact</a>
           </div>
           <div class="footer-col">
             <h4 class="footer-heading">Connect</h4>
-            <a href="#">GitHub</a>
-            <a href="#">LinkedIn</a>
-            <a href="#">Twitter</a>
-            <a href="#">Contact</a>
+            <div class="footer-social">
+              <a href="#" class="footer-social-link" aria-label="GitHub">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+              </a>
+              <a href="#" class="footer-social-link" aria-label="LinkedIn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+              </a>
+              <a href="#" class="footer-social-link" aria-label="Twitter">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+              </a>
+            </div>
           </div>
         </div>
       </div>
       <div class="footer-divider"></div>
       <div class="footer-bottom">
-        <p>&copy; 2026 EduVerse Team. All rights reserved.</p>
-        <p>Gemini Webverse Challenge 2026</p>
-        <p class="footer-tagline">Designed for the future. Built with AI.</p>
+        <p>&copy; 2026 Team InnoVerse. All rights reserved.</p>
+        <p class="footer-challenge">Gemini Webverse Challenge 2026</p>
       </div>
     </div>
   </footer>
 
-  <!-- Scroll to top -->
   <button id="scroll-top" class="scroll-top-btn" aria-label="Scroll to top">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
   </button>
 
-  <!-- Scripts -->
   <script src="script.js"></script>
 </body>
 </html>
