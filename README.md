@@ -52,7 +52,8 @@ EduVerse 2050 is an immersive storytelling website that envisions the future of 
 ├── assets/
 │   ├── poster-main.png       # Main AI poster image
 │   ├── poster-classroom.png  # Classroom poster image
-│   ├── music.mp3             # Soundtrack audio file
+│   ├── music/
+│   │   └── First_Light_of_day.mp3  # Soundtrack audio file
 │   └── favicon.ico           # Favicon
 └── README.md
 ```
@@ -63,7 +64,7 @@ EduVerse 2050 is an immersive storytelling website that envisions the future of 
 2. Add your poster images to `assets/`:
    - `poster-main.png` (16:9 recommended)
    - `poster-classroom.png` (16:9 recommended)
-3. Add your soundtrack to `assets/music.mp3`
+3. Add your soundtrack to `assets/music/First_Light_of_day.mp3`
 4. Open `index.html` in a browser — no build step required
 
 ## Deployment

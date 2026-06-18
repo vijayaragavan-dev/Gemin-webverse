@@ -571,7 +571,7 @@
       if (container) {
         const msg = document.createElement('p');
         msg.className = 'player-error';
-        msg.textContent = 'Soundtrack file not found. Add assets/music/First_Light_of_day.mp3.mpeg';
+        msg.textContent = 'Soundtrack file not found. Ensure assets/music/First_Light_of_day.mp3 is present.';
         container.appendChild(msg);
       }
     }
@@ -592,6 +592,27 @@
     audio.addEventListener('error', function () {
       if (!audioErrorShown) showAudioError();
     }, { once: true });
+
+    audio.addEventListener('loadedmetadata', function () {
+      console.log('[Audio] Metadata loaded. Duration:', audio.duration);
+    });
+    audio.addEventListener('canplay', function () {
+      console.log('[Audio] Can play. ReadyState:', audio.readyState, '| NetworkState:', audio.networkState);
+    });
+    audio.addEventListener('loadstart', function () {
+      console.log('[Audio] Loading started. Src:', audio.src);
+    });
+    audio.addEventListener('waiting', function () {
+      console.log('[Audio] Waiting for data...');
+    });
+    audio.addEventListener('playing', function () {
+      console.log('[Audio] Playing.');
+    });
+    audio.addEventListener('progress', function () {
+      if (audio.buffered.length > 0) {
+        console.log('[Audio] Buffered:', audio.buffered.end(0), '/', audio.duration);
+      }
+    });
 
     progressTrack.addEventListener('mousedown', function (e) {
       seek(e);
