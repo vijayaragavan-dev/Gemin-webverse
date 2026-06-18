@@ -807,6 +807,396 @@
     sections.forEach((s) => observer.observe(s));
   }
 
+  /* TYPEWRITER */
+  function initTypewriter() {
+    const el = $('.tagline-text');
+    if (!el) return;
+    const text = el.textContent;
+    el.textContent = '';
+    let i = 0;
+    const speed = 50;
+    function type() {
+      if (i < text.length) {
+        el.textContent += text.charAt(i);
+        i++;
+        setTimeout(type, speed);
+      }
+    }
+    const observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            setTimeout(type, 400);
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+    observer.observe(el.closest('.hero-tagline') || el);
+  }
+
+  /* CURSOR GLOW */
+  function initCursorGlow() {
+    const glow = $('#cursor-glow');
+    if (!glow) return;
+    document.addEventListener('mousemove', function (e) {
+      glow.style.transform = 'translate(' + (e.clientX) + 'px, ' + (e.clientY) + 'px)';
+    }, { passive: true });
+  }
+
+  /* TEAM CARD TILT */
+  function initTeamTilt() {
+    const cards = $$('.team-card');
+    cards.forEach(function (card) {
+      card.addEventListener('mousemove', function (e) {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = ((y - centerY) / centerY) * -4;
+        const rotateY = ((x - centerX) / centerX) * 4;
+        card.style.transform = 'perspective(800px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) translateY(-4px)';
+      });
+      card.addEventListener('mouseleave', function () {
+        card.style.transform = '';
+      });
+    });
+  }
+
+  /* AIRA CHAT — RESPONSES */
+  var airaResponses = {
+    'what-is-eduverse': {
+      title: 'What is EduVerse 2050?',
+      text: '<strong>EduVerse 2050</strong> is a visionary educational ecosystem where artificial intelligence has eliminated every barrier to learning. It is a world where every student \u2014 regardless of location, language, or background \u2014 has access to a personalized AI mentor that adapts to their unique learning style, pace, and goals.<br><br>Powered by <strong>Google\'s Gemini AI</strong>, EduVerse 2050 transcends traditional classrooms through holographic interfaces, immersive virtual reality, real-time language translation, and adaptive curricula that evolve with each learner.<br><br>This is not just an evolution of education \u2014 it is a revolution. <strong>Education Without Boundaries.</strong>',
+      related: ['who-is-aira', 'why-gemini', 'future-classrooms']
+    },
+    'who-is-aira': {
+      title: 'Who is AIRA?',
+      text: '<strong>AIRA</strong> (Artificial Intelligence Responsive Academic Assistant) is an intelligent AI mentor designed to guide every learner through a personalized educational journey.<br><br>Available <strong>24/7</strong>, AIRA adapts to each student\'s learning style, preferred language, academic strengths, and personal goals. She identifies areas needing reinforcement and creates customized learning paths in real-time.<br><br>AIRA is more than a tutor \u2014 she is a companion, a guide, and a gateway to unlimited knowledge. She represents the <strong>heart of the EduVerse 2050</strong> vision.',
+      related: ['why-gemini', 'personalized-learning', 'day-in-life']
+    },
+    'why-gemini': {
+      title: 'Why Gemini AI?',
+      text: '<strong>Gemini</strong> provides the core intelligence behind EduVerse 2050. Developed by Google, Gemini is a state-of-the-art multimodal AI capable of understanding text, images, audio, video, and code simultaneously.<br><br>In EduVerse 2050, Gemini powers AIRA\'s ability to:<br>\u2022 Understand complex student queries across subjects<br>\u2022 Generate personalized lesson plans in real-time<br>\u2022 Provide step-by-step reasoning for problem-solving<br>\u2022 Teach in <strong>100+ languages</strong> with cultural context<br><br>Gemini makes <strong>truly adaptive education</strong> possible at a global scale.',
+      related: ['what-is-eduverse', 'impact', 'vision-2050']
+    },
+    'future-classrooms': {
+      title: 'Future Classrooms',
+      text: '<strong>Classrooms of 2050</strong> bear little resemblance to today\'s schools. They are immersive, adaptive, and borderless.<br><br>Key features include:<br>\u2022 <strong>Holographic interfaces</strong> that bring complex concepts to life in 3D<br>\u2022 <strong>Virtual reality environments</strong> where students explore historical events, scientific phenomena, and distant cultures<br>\u2022 <strong>AI teaching assistants</strong> that provide instant, personalized support<br>\u2022 <strong>Real-time collaboration</strong> with students from every continent<br>\u2022 <strong>Biometric engagement tracking</strong> that adjusts lesson difficulty automatically<br><br>Learning is no longer confined to four walls \u2014 it happens <strong>everywhere</strong>.',
+      related: ['personalized-learning', 'day-in-life', 'global-network']
+    },
+    'personalized-learning': {
+      title: 'Personalized Learning',
+      text: '<strong>Personalized learning</strong> is the cornerstone of EduVerse 2050. Every student receives a unique educational experience designed specifically for them.<br><br>AIRA analyzes thousands of data points per student:<br>\u2022 Learning pace and retention patterns<br>\u2022 Preferred content formats (visual, auditory, kinesthetic)<br>\u2022 Knowledge gaps and strengths<br>\u2022 Emotional engagement and focus levels<br><br>The curriculum <strong>adapts in real-time</strong>, ensuring no student is left behind and no student is held back. This is education that truly <strong>fits the individual</strong>, not the other way around.',
+      related: ['who-is-aira', 'what-is-eduverse', 'impact']
+    },
+    'global-network': {
+      title: 'Global Education Network',
+      text: 'The <strong>EduVerse Global Network</strong> connects students from over <strong>190 countries</strong>, creating a truly borderless educational community.<br><br>Features of the network:<br>\u2022 Real-time translation breaks down <strong>every language barrier</strong><br>\u2022 Cultural exchange programs embedded in daily lessons<br>\u2022 Collaborative projects with peers worldwide<br>\u2022 Shared virtual campuses open 24/7<br>\u2022 Access to world-class educators regardless of geography<br><br>A student in rural India can learn alongside a peer in Tokyo, Berlin, or Nairobi \u2014 all guided by the same <strong>AIRA mentor</strong>. Geography is no longer destiny.',
+      related: ['impact', 'what-is-eduverse', 'future-classrooms']
+    },
+    'day-in-life': {
+      title: 'Day in the Life of a Student',
+      text: 'A typical day for a student in <strong>EduVerse 2050</strong>:<br><br><strong>7:00 AM</strong> \u2014 AIRA reviews yesterday\'s progress and prepares a personalized schedule<br><strong>9:00 AM</strong> \u2014 Immersive VR classroom: exploring marine biology as a holographic ocean<br><strong>11:00 AM</strong> \u2014 AIRA detects a weak concept and adjusts the lesson in real-time<br><strong>2:00 PM</strong> \u2014 Global collaborative project with students from 4 continents<br><strong>5:00 PM</strong> \u2014 Hands-on AI-powered simulation to practice new skills<br><strong>8:00 PM</strong> \u2014 AIRA generates a personalized revision plan for long-term retention<br><br>Every moment is <strong>optimized for maximum learning</strong> while keeping the student engaged and inspired.',
+      related: ['future-classrooms', 'personalized-learning', 'global-network']
+    },
+    'team-innoverse': {
+      title: 'Team InnoVerse',
+      text: '<strong>Team InnoVerse</strong> is the group of visionary creators behind EduVerse 2050. United by a shared passion for using AI to transform education, the team brings together expertise in full-stack development, UI/UX design, and prompt engineering.<br><br><strong>Vijayaragavan U</strong> \u2014 Full Stack Developer<br><strong>Pravin Kumar M</strong> \u2014 UI/UX Designer<br><strong>Saarukesh M</strong> \u2014 Prompt Engineer<br><br>Together, they have built this vision of the future \u2014 a world where <strong>every learner has an AI mentor</strong> and education knows no boundaries.',
+      related: ['what-is-eduverse', 'vision-2050', 'why-gemini']
+    },
+    'impact': {
+      title: 'Impact on Education',
+      text: 'EduVerse 2050\'s impact on global education is <strong>transformative</strong>:<br><br>\u2022 <strong>1 Billion+</strong> students connected to AI mentors<br>\u2022 <strong>150+ languages</strong> supported for inclusive learning<br>\u2022 <strong>10x faster</strong> concept understanding through adaptive techniques<br>\u2022 <strong>100% personalized</strong> curricula for every learner<br>\u2022 <strong>24/7 access</strong> to quality education regardless of location<br><br>The traditional one-size-fits-all model is replaced by an ecosystem where <strong>every student thrives</strong>. Dropout rates approach zero, and global literacy reaches unprecedented levels.<br><br>This is the <strong>future of education</strong> \u2014 and it is already here.',
+      related: ['what-is-eduverse', 'global-network', 'vision-2050']
+    },
+    'vision-2050': {
+      title: 'Vision for 2050',
+      text: 'By <strong>2050</strong>, EduVerse envisions a world where:<br><br>\u2022 <strong>Every human</strong> on Earth has access to a personalized AI mentor<br>\u2022 Language, location, and economic status are <strong>no longer barriers</strong> to education<br>\u2022 Learning is <strong>continuous, lifelong, and self-directed</strong><br>\u2022 Classrooms exist as <strong>virtual and augmented spaces</strong> that blend seamlessly with the real world<br>\u2022 AI and human teachers <strong>co-create</strong> the most effective learning experiences<br>\u2022 Education is recognized as a <strong>fundamental human right</strong>, fully realized<br><br>This is not science fiction. This is the road we are building. <strong>Education Without Boundaries.</strong>',
+      related: ['what-is-eduverse', 'impact', 'why-gemini']
+    }
+  };
+
+  var airaOffTopic = 'I am <strong>AIRA</strong>, an educational AI mentor focused on <strong>EduVerse 2050</strong>.<br><br>Please ask questions related to:<br>\u2022 EduVerse 2050<br>\u2022 AIRA<br>\u2022 Gemini AI<br>\u2022 Future Education<br>\u2022 Personalized Learning<br>\u2022 Future Classrooms<br><br>You can also select one of the suggested topics above.';
+
+  var airaAllowedKeywords = [
+    'eduverse', 'aira', 'gemini', 'education', 'learn', 'learning', 'classroom',
+    'student', 'teacher', 'future', 'mentor', 'personalized', 'global',
+    'innovation', '2050', 'curriculum', 'immersive', 'virtual', 'holographic',
+    'adaptive', 'inclusive', 'boundaries', 'vision', 'innoverse', 'team',
+    'impact', 'network', 'simulation', 'multilingual', 'language', 'access',
+    'ai', 'intelligence', 'knowledge', 'path', 'guide', 'assistant', 'academic'
+  ];
+
+  var airaQuickTopics = [
+    { id: 'what-is-eduverse', label: 'What is EduVerse 2050?' },
+    { id: 'who-is-aira', label: 'Who is AIRA?' },
+    { id: 'why-gemini', label: 'Why Gemini AI?' },
+    { id: 'future-classrooms', label: 'Future Classrooms' },
+    { id: 'personalized-learning', label: 'Personalized Learning' },
+    { id: 'global-network', label: 'Global Education Network' },
+    { id: 'day-in-life', label: 'Day in the Life' },
+    { id: 'team-innoverse', label: 'Team InnoVerse' },
+    { id: 'impact', label: 'Impact on Education' },
+    { id: 'vision-2050', label: 'Vision for 2050' }
+  ];
+
+  /* AIRA CHAT */
+  function initAiraChat() {
+    var chat = $('#aira-chat');
+    var toggleBtn = $('#aira-chat-toggle');
+    var closeBtn = $('#aira-chat-close');
+    var windowEl = $('#aira-chat-window');
+    var messagesEl = $('#aira-chat-messages');
+    var inputEl = $('#aira-chat-input');
+    var sendBtn = $('#aira-chat-send');
+    if (!chat) return;
+
+    var isOpen = false;
+    var isProcessing = false;
+
+    function openChat() {
+      isOpen = true;
+      chat.classList.add('open');
+      chat.setAttribute('aria-hidden', 'false');
+      toggleBtn.setAttribute('aria-expanded', 'true');
+      setTimeout(function () { inputEl.focus(); }, 400);
+      if (messagesEl.children.length === 0) {
+        showGreeting();
+      }
+    }
+
+    function closeChat() {
+      isOpen = false;
+      chat.classList.remove('open');
+      chat.setAttribute('aria-hidden', 'true');
+      toggleBtn.setAttribute('aria-expanded', 'false');
+      toggleBtn.focus();
+    }
+
+    function scrollToBottom() {
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+    }
+
+    function addMessage(type, content) {
+      var div = document.createElement('div');
+      div.className = 'aira-message ' + type;
+      div.innerHTML = content;
+      messagesEl.appendChild(div);
+      scrollToBottom();
+      return div;
+    }
+
+    function showTyping() {
+      var div = document.createElement('div');
+      div.className = 'aira-typing';
+      div.id = 'aira-typing-indicator';
+      for (var i = 0; i < 3; i++) {
+        var dot = document.createElement('span');
+        dot.className = 'aira-typing-dot';
+        div.appendChild(dot);
+      }
+      messagesEl.appendChild(div);
+      scrollToBottom();
+    }
+
+    function hideTyping() {
+      var el = document.getElementById('aira-typing-indicator');
+      if (el) el.remove();
+    }
+
+    function showQuickActions() {
+      var container = document.createElement('div');
+      container.className = 'aira-quick-actions';
+      container.id = 'aira-quick-actions';
+
+      for (var i = 0; i < airaQuickTopics.length; i++) {
+        (function (topic) {
+          var btn = document.createElement('button');
+          btn.className = 'aira-quick-btn';
+          btn.textContent = topic.label;
+          btn.setAttribute('data-topic', topic.id);
+          btn.addEventListener('click', function () {
+            handleQuickAction(topic.id);
+          });
+          container.appendChild(btn);
+        })(airaQuickTopics[i]);
+      }
+
+      messagesEl.appendChild(container);
+      scrollToBottom();
+    }
+
+    function removeQuickActions() {
+      var el = document.getElementById('aira-quick-actions');
+      if (el) el.remove();
+    }
+
+    function showSuggestedTopics(topicIds) {
+      if (!topicIds || topicIds.length === 0) return;
+      var container = document.createElement('div');
+      container.className = 'aira-suggested';
+
+      var label = document.createElement('span');
+      label.className = 'aira-suggested-label';
+      label.textContent = 'Suggested Topics:';
+      container.appendChild(label);
+
+      for (var i = 0; i < topicIds.length; i++) {
+        (function (id) {
+          var topic = null;
+          for (var j = 0; j < airaQuickTopics.length; j++) {
+            if (airaQuickTopics[j].id === id) { topic = airaQuickTopics[j]; break; }
+          }
+          if (!topic) return;
+          var btn = document.createElement('button');
+          btn.className = 'aira-suggested-btn';
+          btn.textContent = topic.label;
+          btn.addEventListener('click', function () {
+            handleQuickAction(id);
+          });
+          container.appendChild(btn);
+        })(topicIds[i]);
+      }
+
+      messagesEl.appendChild(container);
+      scrollToBottom();
+    }
+
+    function handleQuickAction(topicId) {
+      if (isProcessing) return;
+      var response = airaResponses[topicId];
+      if (!response) return;
+
+      removeQuickActions();
+
+      addMessage('user', response.title);
+
+      isProcessing = true;
+      setInputState(true);
+      showTyping();
+
+      setTimeout(function () {
+        hideTyping();
+        addMessage('aira', response.text);
+        showSuggestedTopics(response.related);
+        isProcessing = false;
+        setInputState(false);
+      }, 1200);
+    }
+
+    function handleTextInput(text) {
+      if (!text.trim()) return;
+      if (isProcessing) return;
+
+      inputEl.value = '';
+      removeQuickActions();
+
+      addMessage('user', text);
+
+      isProcessing = true;
+      setInputState(true);
+      showTyping();
+
+      var isRelevant = isQuestionRelevant(text);
+      var matchedTopic = findMatchingTopic(text);
+
+      setTimeout(function () {
+        hideTyping();
+        if (matchedTopic) {
+          var response = airaResponses[matchedTopic];
+          addMessage('aira', response.text);
+          showSuggestedTopics(response.related);
+        } else if (isRelevant) {
+          addMessage('aira', 'That is a great question about the future of education.<br><br><strong>EduVerse 2050</strong> envisions a world where AI mentors guide every learner, breaking down barriers of language, location, and background. Every student receives a <strong>personalized, adaptive education</strong> powered by <strong>Gemini AI</strong>.<br><br>Would you like to explore one of these topics?');
+          showSuggestedTopics(['what-is-eduverse', 'personalized-learning', 'future-classrooms']);
+        } else {
+          addMessage('aira', airaOffTopic);
+          showSuggestedTopics(['what-is-eduverse', 'who-is-aira', 'why-gemini']);
+        }
+        isProcessing = false;
+        setInputState(false);
+      }, 1200);
+    }
+
+    function isQuestionRelevant(text) {
+      var lower = text.toLowerCase();
+      for (var i = 0; i < airaAllowedKeywords.length; i++) {
+        if (lower.indexOf(airaAllowedKeywords[i]) !== -1) return true;
+      }
+      return false;
+    }
+
+    function findMatchingTopic(text) {
+      var lower = text.toLowerCase();
+      var bestMatch = null;
+      var bestScore = 0;
+
+      for (var key in airaResponses) {
+        if (airaResponses.hasOwnProperty(key)) {
+          var title = airaResponses[key].title.toLowerCase();
+          var score = 0;
+          var words = title.replace(/[2050?]/g, '').split(' ');
+          for (var i = 0; i < words.length; i++) {
+            var w = words[i].toLowerCase().trim();
+            if (w.length > 2 && lower.indexOf(w) !== -1) {
+              score++;
+            }
+          }
+          if (score > bestScore) {
+            bestScore = score;
+            bestMatch = key;
+          }
+        }
+      }
+
+      return bestScore >= 2 ? bestMatch : null;
+    }
+
+    function setInputState(disabled) {
+      inputEl.disabled = disabled;
+      sendBtn.disabled = disabled;
+    }
+
+    function showGreeting() {
+      addMessage('greeting', 'Hello, I am <strong>AIRA</strong>.<br><br>I can help you explore <strong>EduVerse 2050</strong>.<br><br>Choose one of the topics below or ask me anything about the future of education.');
+      showQuickActions();
+    }
+
+    /* EVENT LISTENERS */
+    toggleBtn.addEventListener('click', function () {
+      if (isOpen) {
+        closeChat();
+      } else {
+        openChat();
+      }
+    });
+    closeBtn.addEventListener('click', closeChat);
+
+    sendBtn.addEventListener('click', function () {
+      handleTextInput(inputEl.value);
+    });
+
+    inputEl.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        handleTextInput(inputEl.value);
+      }
+    });
+
+    /* ESC to close */
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && isOpen) {
+        closeChat();
+      }
+    });
+
+    /* OPEN ON PAGE LOAD after a brief delay */
+    setTimeout(openChat, 3000);
+  }
+
   /* INIT */
   document.body.classList.add('loading-active');
 
@@ -829,6 +1219,10 @@
     initTestimonials();
     initDayTimeline();
     initSectionTransitions();
+    initTypewriter();
+    initCursorGlow();
+    initTeamTilt();
+    initAiraChat();
   }
 
   if (document.readyState === 'loading') {
