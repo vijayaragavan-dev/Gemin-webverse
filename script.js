@@ -13,7 +13,6 @@
   const posterModal = $('#poster-modal');
   const modalOverlay = $('#modal-overlay');
   const modalClose = $('.modal-close');
-  const modalContent = $('.modal-content');
   const audio = $('#audio-player');
   const playBtn = $('#play-btn');
   const playIcon = $('#play-icon');
@@ -118,18 +117,19 @@
   }
 
   /* LOADING SCREEN */
+  let loadingFinished = false;
+  function hideLoading() {
+    if (loadingFinished) return;
+    loadingFinished = true;
+    loadingScreen.classList.add('loaded');
+    document.body.classList.remove('loading-active');
+  }
   function initLoadingScreen() {
-    let loaded = false;
-    function hideLoading() {
-      if (loaded) return;
-      loaded = true;
-      loadingScreen.classList.add('loaded');
-      document.body.classList.remove('loading-active');
-    }
     window.addEventListener('load', hideLoading);
     setTimeout(hideLoading, 3000);
     if (document.readyState === 'complete') hideLoading();
   }
+  setTimeout(hideLoading, 6000);
 
   /* SCROLL PROGRESS */
   function initScrollProgress() {
@@ -153,7 +153,7 @@
 
   /* PARTICLES */
   function initParticles() {
-    if (!particleCanvas) return;
+    if (!particleCanvas || !heroSection) return;
 
     const ctx = particleCanvas.getContext('2d');
     let particles = [];
@@ -457,7 +457,7 @@
 
   /* HERO PARALLAX */
   function initHeroParallax() {
-    if (!heroContent) return;
+    if (!heroContent || !heroSection) return;
 
     heroSection.addEventListener('mousemove', function (e) {
       const rect = heroSection.getBoundingClientRect();
@@ -479,13 +479,16 @@
     let isLooping = false;
     let isMuted = false;
     let userInteracted = false;
-    let dragStartHandler, dragMoveHandler, dragEndHandler;
 
     function togglePlay() {
       userInteracted = true;
       if (audio.paused) {
-        audio.play().catch(function () {
-          if (!audioErrorShown) showAudioError();
+        audio.play().catch(function (err) {
+          if (err.name === 'NotAllowedError') {
+            console.warn('[Audio] User interaction required before playback.');
+          } else if (!audioErrorShown) {
+            showAudioError();
+          }
         });
       } else {
         audio.pause();
@@ -571,9 +574,55 @@
       if (container) {
         const msg = document.createElement('p');
         msg.className = 'player-error';
-        msg.textContent = 'Soundtrack file not found. Ensure assets/music/First_Light_of_day.mp3 is present.';
+        msg.textContent = 'Soundtrack is currently unavailable. Please try again later.';
         container.appendChild(msg);
       }
+    }
+
+    function makeProgressDrag(e) {
+      seek(e);
+      function onMove(ev) { seek(ev); }
+      function onUp() {
+        document.removeEventListener('mousemove', onMove);
+        document.removeEventListener('mouseup', onUp);
+      }
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup', onUp);
+    }
+
+    function makeProgressTouchDrag(e) {
+      e.preventDefault();
+      seek(e);
+      function onMove(ev) { seek(ev); }
+      function onUp() {
+        document.removeEventListener('touchmove', onMove);
+        document.removeEventListener('touchend', onUp);
+      }
+      document.addEventListener('touchmove', onMove, { passive: false });
+      document.addEventListener('touchend', onUp);
+    }
+
+    function makeVolumeDrag(e) {
+      setVolume(e);
+      function onMove(ev) { setVolume(ev); }
+      function onUp() {
+        document.removeEventListener('mousemove', onMove);
+        document.removeEventListener('mouseup', onUp);
+      }
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup', onUp);
+    }
+
+    function makeVolumeTouchDrag(e) {
+      e.preventDefault();
+      setVolume(e);
+      function onMove(ev) { setVolume(ev); }
+      function onUp() {
+        document.removeEventListener('touchmove', onMove);
+        document.removeEventListener('touchend', onUp);
+      }
+      document.addEventListener('touchmove', onMove, { passive: false });
+      document.addEventListener('touchend', onUp);
     }
 
     if (playBtn) playBtn.addEventListener('click', togglePlay);
@@ -593,72 +642,14 @@
       if (!audioErrorShown) showAudioError();
     }, { once: true });
 
-    audio.addEventListener('loadedmetadata', function () {
-      console.log('[Audio] Metadata loaded. Duration:', audio.duration);
-    });
-    audio.addEventListener('canplay', function () {
-      console.log('[Audio] Can play. ReadyState:', audio.readyState, '| NetworkState:', audio.networkState);
-    });
-    audio.addEventListener('loadstart', function () {
-      console.log('[Audio] Loading started. Src:', audio.src);
-    });
-    audio.addEventListener('waiting', function () {
-      console.log('[Audio] Waiting for data...');
-    });
-    audio.addEventListener('playing', function () {
-      console.log('[Audio] Playing.');
-    });
-    audio.addEventListener('progress', function () {
-      if (audio.buffered.length > 0) {
-        console.log('[Audio] Buffered:', audio.buffered.end(0), '/', audio.duration);
-      }
-    });
-
-    progressTrack.addEventListener('mousedown', function (e) {
-      seek(e);
-      dragStartHandler = function (ev) { seek(ev); };
-      dragEndHandler = function () {
-        document.removeEventListener('mousemove', dragStartHandler);
-        document.removeEventListener('mouseup', dragEndHandler);
-      };
-      document.addEventListener('mousemove', dragStartHandler);
-      document.addEventListener('mouseup', dragEndHandler);
-    });
-
-    progressTrack.addEventListener('touchstart', function (e) {
-      e.preventDefault();
-      seek(e);
-      dragStartHandler = function (ev) { seek(ev); };
-      dragEndHandler = function () {
-        document.removeEventListener('touchmove', dragStartHandler);
-        document.removeEventListener('touchend', dragEndHandler);
-      };
-      document.addEventListener('touchmove', dragStartHandler, { passive: true });
-      document.addEventListener('touchend', dragEndHandler);
-    }, { passive: false });
-
-    volumeTrack.addEventListener('mousedown', function (e) {
-      setVolume(e);
-      dragStartHandler = function (ev) { setVolume(ev); };
-      dragEndHandler = function () {
-        document.removeEventListener('mousemove', dragStartHandler);
-        document.removeEventListener('mouseup', dragEndHandler);
-      };
-      document.addEventListener('mousemove', dragStartHandler);
-      document.addEventListener('mouseup', dragEndHandler);
-    });
-
-    volumeTrack.addEventListener('touchstart', function (e) {
-      e.preventDefault();
-      setVolume(e);
-      dragStartHandler = function (ev) { setVolume(ev); };
-      dragEndHandler = function () {
-        document.removeEventListener('touchmove', dragStartHandler);
-        document.removeEventListener('touchend', dragEndHandler);
-      };
-      document.addEventListener('touchmove', dragStartHandler, { passive: true });
-      document.addEventListener('touchend', dragEndHandler);
-    }, { passive: false });
+    if (progressTrack) {
+      progressTrack.addEventListener('mousedown', makeProgressDrag);
+      progressTrack.addEventListener('touchstart', makeProgressTouchDrag, { passive: false });
+    }
+    if (volumeTrack) {
+      volumeTrack.addEventListener('mousedown', makeVolumeDrag);
+      volumeTrack.addEventListener('touchstart', makeVolumeTouchDrag, { passive: false });
+    }
 
     if (muteBtn) muteBtn.addEventListener('click', toggleMute);
     if (loopBtn) loopBtn.addEventListener('click', toggleLoop);
@@ -723,6 +714,8 @@
         if (target === 1 && suffix === 'B+') el.textContent = '1B+';
         else if (is10X) el.textContent = '10X';
         else el.textContent = target + suffix;
+        el.classList.add('completed');
+        setTimeout(function () { el.classList.remove('completed'); }, 700);
       }
     }
 
@@ -731,6 +724,7 @@
 
   /* SCROLL TO TOP */
   function initScrollTop() {
+    if (!scrollTopBtn) return;
     function checkScroll() {
       scrollTopBtn.classList.toggle('visible', window.scrollY > 500);
     }
@@ -815,6 +809,23 @@
     });
   }
 
+  /* JOURNEY PARALLAX */
+  function initJourneyParallax() {
+    var steps = $$('.journey-step');
+    if (!steps.length) return;
+    var scrollHandler = function () {
+      var sy = window.scrollY;
+      steps.forEach(function (step, i) {
+        var rect = step.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+          var offset = (window.innerHeight - rect.top) * 0.02;
+          step.style.transform = 'translateX(' + Math.min(offset, 12) + 'px)';
+        }
+      });
+    };
+    window.addEventListener('scroll', throttle(scrollHandler, 50), { passive: true });
+  }
+
   /* TESTIMONIAL SLIDER */
   function initTestimonials() {
     if (!testimonialTrack) return;
@@ -833,6 +844,7 @@
         dot.className = 'testimonial-dot' + (i === 0 ? ' active' : '');
         dot.setAttribute('role', 'tab');
         dot.setAttribute('aria-label', 'Go to testimonial ' + (i + 1));
+        dot.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
         dot.addEventListener('click', function () {
           goToSlide(i);
           resetAutoPlay();
@@ -849,6 +861,7 @@
       const dots = $$('.testimonial-dot');
       dots.forEach(function (d, i) {
         d.classList.toggle('active', i === currentIndex);
+        d.setAttribute('aria-selected', i === currentIndex ? 'true' : 'false');
       });
     }
 
@@ -1088,11 +1101,12 @@
     let isProcessing = false;
     let hasOpened = false;
 
+    var chatWindow = $('#aira-chat-window');
     function openChat() {
       isOpen = true;
       hasOpened = true;
       chat.classList.add('open');
-      chat.setAttribute('aria-hidden', 'false');
+      if (chatWindow) chatWindow.setAttribute('aria-hidden', 'false');
       toggleBtn.setAttribute('aria-expanded', 'true');
       setTimeout(function () { if (inputEl) inputEl.focus(); }, 400);
       if (messagesEl && messagesEl.children.length === 0) {
@@ -1103,7 +1117,7 @@
     function closeChat() {
       isOpen = false;
       chat.classList.remove('open');
-      chat.setAttribute('aria-hidden', 'true');
+      if (chatWindow) chatWindow.setAttribute('aria-hidden', 'true');
       toggleBtn.setAttribute('aria-expanded', 'false');
       setTimeout(function () { if (toggleBtn) toggleBtn.focus(); }, 100);
     }
@@ -1343,29 +1357,33 @@
   /* INIT */
   document.body.classList.add('loading-active');
 
+  function safeInit(fn, name) {
+    try { fn(); } catch (e) { console.warn('[EduVerse] ' + name + ' failed:', e); }
+  }
   function init() {
-    initLoadingScreen();
-    initScrollProgress();
-    initParticles();
-    initNavigation();
-    initScrollReveal();
-    initRipple();
-    initPosterTilt();
-    initPosterModal();
-    initAudioPlayer();
-    initCounters();
-    initScrollTop();
-    initClassroomParallax();
-    initHeroParallax();
-    initEqualizer();
-    initFeatureCards();
-    initTestimonials();
-    initDayTimeline();
-    initSectionTransitions();
-    initTypewriter();
-    initCursorGlow();
-    initTeamTilt();
-    initAiraChat();
+    safeInit(initLoadingScreen, 'LoadingScreen');
+    safeInit(initScrollProgress, 'ScrollProgress');
+    safeInit(initParticles, 'Particles');
+    safeInit(initNavigation, 'Navigation');
+    safeInit(initScrollReveal, 'ScrollReveal');
+    safeInit(initRipple, 'Ripple');
+    safeInit(initPosterTilt, 'PosterTilt');
+    safeInit(initPosterModal, 'PosterModal');
+    safeInit(initAudioPlayer, 'AudioPlayer');
+    safeInit(initCounters, 'Counters');
+    safeInit(initScrollTop, 'ScrollTop');
+    safeInit(initClassroomParallax, 'ClassroomParallax');
+    safeInit(initHeroParallax, 'HeroParallax');
+    safeInit(initEqualizer, 'Equalizer');
+    safeInit(initFeatureCards, 'FeatureCards');
+    safeInit(initTestimonials, 'Testimonials');
+    safeInit(initDayTimeline, 'DayTimeline');
+    safeInit(initJourneyParallax, 'JourneyParallax');
+    safeInit(initSectionTransitions, 'SectionTransitions');
+    safeInit(initTypewriter, 'Typewriter');
+    safeInit(initCursorGlow, 'CursorGlow');
+    safeInit(initTeamTilt, 'TeamTilt');
+    safeInit(initAiraChat, 'AiraChat');
   }
 
   if (document.readyState === 'loading') {
