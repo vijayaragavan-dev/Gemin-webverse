@@ -442,6 +442,12 @@
     }
 
     posterTilt.addEventListener('click', openModal);
+    posterTilt.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openModal();
+      }
+    });
     if (modalOverlay) modalOverlay.addEventListener('click', closeModal);
     if (modalClose) modalClose.addEventListener('click', closeModal);
 
@@ -770,6 +776,12 @@
     if (classroomFrame && isTouchDevice()) {
       classroomFrame.addEventListener('click', function () {
         this.classList.toggle('touch-overlay');
+      });
+      classroomFrame.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          this.classList.toggle('touch-overlay');
+        }
       });
     }
   }

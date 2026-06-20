@@ -40,7 +40,7 @@
 <body>
   <div id="cursor-glow" aria-hidden="true"></div>
 
-  <div id="scroll-progress" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+  <div id="scroll-progress" role="progressbar" aria-label="Page scroll progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
 
   <!-- LOADING SCREEN -->
   <div id="loading-screen" role="status" aria-label="Loading">
@@ -57,7 +57,7 @@
   </div>
 
   <!-- NAVIGATION -->
-  <nav id="navbar" role="navigation" aria-label="Main navigation">
+  <nav id="navbar" aria-label="Main navigation">
     <div class="nav-container">
       <a href="#hero" class="nav-logo" aria-label="EduVerse Home">
         <span class="nav-logo-icon">E</span>
@@ -68,32 +68,32 @@
         <span class="nav-toggle-line"></span>
         <span class="nav-toggle-line"></span>
       </button>
-      <ul class="nav-links" role="menubar">
-        <li role="none"><a href="#poster" role="menuitem" class="nav-link">Poster</a></li>
-        <li role="none"><a href="#gemini" role="menuitem" class="nav-link">Gemini</a></li>
-        <li role="none"><a href="#aira" role="menuitem" class="nav-link">AIRA</a></li>
-        <li role="none"><a href="#story" role="menuitem" class="nav-link">Story</a></li>
-        <li role="none"><a href="#features" role="menuitem" class="nav-link">Features</a></li>
-        <li role="none"><a href="#comparison" role="menuitem" class="nav-link">Problems</a></li>
-        <li role="none"><a href="#solutions" role="menuitem" class="nav-link">Solutions</a></li>
-        <li role="none"><a href="#student-journey" role="menuitem" class="nav-link">Journey</a></li>
-        <li role="none"><a href="#vs-comparison" role="menuitem" class="nav-link">Vs</a></li>
-        <li role="none"><a href="#stats" role="menuitem" class="nav-link">Impact</a></li>
-        <li role="none"><a href="#team" role="menuitem" class="nav-link">Team</a></li>
+      <ul class="nav-links">
+        <li><a href="#poster" class="nav-link">Poster</a></li>
+        <li><a href="#gemini" class="nav-link">Gemini</a></li>
+        <li><a href="#aira" class="nav-link">AIRA</a></li>
+        <li><a href="#story" class="nav-link">Story</a></li>
+        <li><a href="#features" class="nav-link">Features</a></li>
+        <li><a href="#comparison" class="nav-link">Problems</a></li>
+        <li><a href="#solutions" class="nav-link">Solutions</a></li>
+        <li><a href="#student-journey" class="nav-link">Journey</a></li>
+        <li><a href="#vs-comparison" class="nav-link">Vs</a></li>
+        <li><a href="#stats" class="nav-link">Impact</a></li>
+        <li><a href="#team" class="nav-link">Team</a></li>
       </ul>
       <div class="mobile-menu" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Navigation menu">
         <div class="mobile-menu-nav">
-          <a href="#poster" class="mobile-link" style="--i:0">Poster</a>
-          <a href="#gemini" class="mobile-link" style="--i:1">Gemini</a>
-          <a href="#aira" class="mobile-link" style="--i:2">AIRA</a>
-          <a href="#story" class="mobile-link" style="--i:3">Story</a>
-          <a href="#features" class="mobile-link" style="--i:4">Features</a>
-          <a href="#comparison" class="mobile-link" style="--i:5">Problems</a>
-          <a href="#solutions" class="mobile-link" style="--i:6">Solutions</a>
-          <a href="#student-journey" class="mobile-link" style="--i:7">Journey</a>
-          <a href="#vs-comparison" class="mobile-link" style="--i:8">Vs</a>
-          <a href="#stats" class="mobile-link" style="--i:9">Impact</a>
-          <a href="#team" class="mobile-link" style="--i:10">Team</a>
+          <a href="#poster" class="mobile-link">Poster</a>
+          <a href="#gemini" class="mobile-link">Gemini</a>
+          <a href="#aira" class="mobile-link">AIRA</a>
+          <a href="#story" class="mobile-link">Story</a>
+          <a href="#features" class="mobile-link">Features</a>
+          <a href="#comparison" class="mobile-link">Problems</a>
+          <a href="#solutions" class="mobile-link">Solutions</a>
+          <a href="#student-journey" class="mobile-link">Journey</a>
+          <a href="#vs-comparison" class="mobile-link">Vs</a>
+          <a href="#stats" class="mobile-link">Impact</a>
+          <a href="#team" class="mobile-link">Team</a>
         </div>
       </div>
     </div>
@@ -282,7 +282,7 @@
         <p class="section-subtitle">Witness the dawn of AI-driven education</p>
       </div>
       <div class="poster-wrapper" data-reveal="fade-up" data-delay="200">
-        <div class="poster-frame" id="poster-tilt">
+        <div class="poster-frame" id="poster-tilt" role="button" tabindex="0">
           <div class="poster-glow"></div>
           <div class="poster-image-wrapper">
             <img
@@ -326,20 +326,21 @@
       <div class="section-header" data-reveal="fade-up">
         <span class="section-badge">The Challenge</span>
         <h2 class="section-title">The Problem With Today's Education</h2>
-        <p class="section-subtitle">Six critical challenges holding back millions of learners worldwide</p>
+        <p class="section-subtitle">Five critical challenges holding back millions of learners worldwide</p>
+      </div>
+      <div class="problems-showcase" data-reveal="fade-up">
+        <div class="problems-showcase-image">
+          <img src="assets/today-education.jpeg" alt="Today's education challenges and barriers" class="problems-hero-img" loading="lazy" onerror="this.parentElement.classList.add('img-fallback'); this.style.display='none';">
+          <div class="problems-showcase-overlay"></div>
+        </div>
       </div>
       <div class="problems-grid">
         <div class="problem-card" data-reveal="fade-up" data-delay="100">
           <div class="problem-card-glow"></div>
-          <div class="problem-image">
-            <div class="problem-img-placeholder">
-              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a4 4 0 0 1 4 4v2a4 4 0 0 1-8 0V6a4 4 0 0 1 4-4z"/><path d="M20 22v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-            </div>
-          </div>
           <div class="problem-content">
             <span class="problem-number">01</span>
-            <h3 class="problem-title">One-Size-Fits-All Education</h3>
-            <p class="problem-desc">Every student learns differently, but traditional classrooms teach everyone the same way at the same pace. Visual, auditory, and kinesthetic learners are forced into a single mold.</p>
+            <h3 class="problem-title">One-Size-Fits-All Learning</h3>
+            <p class="problem-desc">Fast learners get bored. Average learners struggle to keep pace. Slow learners get left behind. The same teaching method for everyone cannot unlock every student's potential.</p>
             <div class="problem-impact">
               <span class="problem-impact-label">Real-World Impact</span>
               <p class="problem-impact-text">70% of students report feeling disengaged because the pace of instruction doesn't match their learning style.</p>
@@ -352,36 +353,10 @@
         </div>
         <div class="problem-card" data-reveal="fade-up" data-delay="200">
           <div class="problem-card-glow"></div>
-          <div class="problem-image">
-            <div class="problem-img-placeholder">
-              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-            </div>
-          </div>
           <div class="problem-content">
             <span class="problem-number">02</span>
-            <h3 class="problem-title">Exam Pressure</h3>
-            <p class="problem-desc">High-stakes exams determine futures, creating immense stress and anxiety. Students memorize to pass rather than learn to understand.</p>
-            <div class="problem-impact">
-              <span class="problem-impact-label">Real-World Impact</span>
-              <p class="problem-impact-text">1 in 4 students suffers from exam-related mental health issues, with suicide rates spiking during exam seasons globally.</p>
-            </div>
-            <div class="problem-struggle">
-              <span class="problem-struggle-label">Student Difficulty</span>
-              <p class="problem-struggle-text">"I know the material, but I freeze during exams. My grades don't reflect what I actually know."</p>
-            </div>
-          </div>
-        </div>
-        <div class="problem-card" data-reveal="fade-up" data-delay="300">
-          <div class="problem-card-glow"></div>
-          <div class="problem-image">
-            <div class="problem-img-placeholder">
-              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8l6 6"/><path d="M4 14l4 4 2-4"/><path d="M14 4l6 6"/><path d="M12 2v4"/><path d="M12 18v4"/><path d="M4 12H2"/><path d="M22 12h-2"/></svg>
-            </div>
-          </div>
-          <div class="problem-content">
-            <span class="problem-number">03</span>
             <h3 class="problem-title">Language Barriers</h3>
-            <p class="problem-desc">Quality education is predominantly available in a handful of languages. Students who don't speak these languages face an uphill battle for knowledge.</p>
+            <p class="problem-desc">Students often learn in unfamiliar languages. Many talented students cannot fully understand lessons. Knowledge becomes difficult to access when instruction isn't in your native tongue.</p>
             <div class="problem-impact">
               <span class="problem-impact-label">Real-World Impact</span>
               <p class="problem-impact-text">Over 40% of the global population lacks access to education in a language they fully understand.</p>
@@ -392,38 +367,12 @@
             </div>
           </div>
         </div>
-        <div class="problem-card" data-reveal="fade-up" data-delay="400">
+        <div class="problem-card" data-reveal="fade-up" data-delay="300">
           <div class="problem-card-glow"></div>
-          <div class="problem-image">
-            <div class="problem-img-placeholder">
-              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a4 4 0 0 1 4 4v2a4 4 0 0 1-8 0V6a4 4 0 0 1 4-4z"/><path d="M20 22v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/></svg>
-            </div>
-          </div>
           <div class="problem-content">
-            <span class="problem-number">04</span>
-            <h3 class="problem-title">Lack of Personal Mentorship</h3>
-            <p class="problem-desc">Teachers manage 30-50 students per class, leaving little time for individual guidance. Personalized attention is a luxury most students never experience.</p>
-            <div class="problem-impact">
-              <span class="problem-impact-label">Real-World Impact</span>
-              <p class="problem-impact-text">Student-to-teacher ratios exceed 30:1 in most developing nations, making individualized mentorship nearly impossible.</p>
-            </div>
-            <div class="problem-struggle">
-              <span class="problem-struggle-label">Student Difficulty</span>
-              <p class="problem-struggle-text">"I need extra help with math, but my teacher has 40 other students. I'm too embarrassed to ask."</p>
-            </div>
-          </div>
-        </div>
-        <div class="problem-card" data-reveal="fade-up" data-delay="500">
-          <div class="problem-card-glow"></div>
-          <div class="problem-image">
-            <div class="problem-img-placeholder">
-              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-            </div>
-          </div>
-          <div class="problem-content">
-            <span class="problem-number">05</span>
-            <h3 class="problem-title">Accessibility Challenges</h3>
-            <p class="problem-desc">Students with disabilities, those in remote areas, and those from low-income families face systemic barriers that limit or prevent access to quality education.</p>
+            <span class="problem-number">03</span>
+            <h3 class="problem-title">Limited Accessibility</h3>
+            <p class="problem-desc">Rural students lack quality resources. Remote regions lack qualified teachers. Students with disabilities face physical and systemic barriers that limit their educational opportunities.</p>
             <div class="problem-impact">
               <span class="problem-impact-label">Real-World Impact</span>
               <p class="problem-impact-text">258 million children and youth are out of school globally, with disability and poverty being the primary causes.</p>
@@ -434,17 +383,12 @@
             </div>
           </div>
         </div>
-        <div class="problem-card" data-reveal="fade-up" data-delay="600">
+        <div class="problem-card" data-reveal="fade-up" data-delay="400">
           <div class="problem-card-glow"></div>
-          <div class="problem-image">
-            <div class="problem-img-placeholder">
-              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/></svg>
-            </div>
-          </div>
           <div class="problem-content">
-            <span class="problem-number">06</span>
-            <h3 class="problem-title">Unequal Learning Opportunities</h3>
-            <p class="problem-desc">A child's zip code, income level, or country of birth determines the quality of education they receive. This inequality perpetuates generational poverty.</p>
+            <span class="problem-number">04</span>
+            <h3 class="problem-title">Unequal Opportunities</h3>
+            <p class="problem-desc">Not every school has the same facilities. Some students have advanced labs while others lack basic learning tools. A child's zip code determines the quality of their education.</p>
             <div class="problem-impact">
               <span class="problem-impact-label">Real-World Impact</span>
               <p class="problem-impact-text">Students in the wealthiest countries score 4x higher on standardized assessments than those in the poorest countries.</p>
@@ -452,6 +396,22 @@
             <div class="problem-struggle">
               <span class="problem-struggle-label">Student Difficulty</span>
               <p class="problem-struggle-text">"My village school has no electricity or internet. How can I compete with students from developed cities?"</p>
+            </div>
+          </div>
+        </div>
+        <div class="problem-card" data-reveal="fade-up" data-delay="500">
+          <div class="problem-card-glow"></div>
+          <div class="problem-content">
+            <span class="problem-number">05</span>
+            <h3 class="problem-title">Physical Infrastructure Dependency</h3>
+            <p class="problem-desc">Learning depends entirely on physical classrooms. Transportation is required. Geography limits access. Millions are excluded simply because of where they live.</p>
+            <div class="problem-impact">
+              <span class="problem-impact-label">Real-World Impact</span>
+              <p class="problem-impact-text">Over 260 million children worldwide lack access to schools within a reasonable distance from their homes.</p>
+            </div>
+            <div class="problem-struggle">
+              <span class="problem-struggle-label">Student Difficulty</span>
+              <p class="problem-struggle-text">"I walk 3 hours every day just to reach school. If I miss the morning walk, I lose an entire day of learning."</p>
             </div>
           </div>
         </div>
@@ -470,114 +430,134 @@
       <div class="section-header" data-reveal="fade-up">
         <span class="section-badge">The Solution</span>
         <h2 class="section-title">EduVerse 2050 Solutions</h2>
-        <p class="section-subtitle">Six revolutionary technologies transforming education forever</p>
+        <p class="section-subtitle">Eight revolutionary technologies transforming education forever</p>
       </div>
       <div class="solutions-grid">
         <div class="solution-card" data-reveal="fade-up" data-delay="100">
           <div class="solution-card-glow"></div>
           <div class="solution-image">
-            <div class="solution-img-placeholder">
-              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a4 4 0 0 1 4 4v2a4 4 0 0 1-8 0V6a4 4 0 0 1 4-4z"/><path d="M20 22v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><path d="M12 14v4"/><path d="M9 18h6"/></svg>
-            </div>
+            <img src="assets/AIRA.jpeg" alt="AIRA - AI Mentor for personalized education" class="solution-img" loading="lazy" onerror="this.parentElement.classList.add('sol-img-fallback'); this.style.display='none';">
           </div>
           <div class="solution-card-body">
             <span class="solution-number">01</span>
             <h3 class="solution-title">AI Mentor — AIRA</h3>
-            <p class="solution-desc">An intelligent AI mentor available 24/7 that adapts to each student's learning style, pace, and goals — providing personalized guidance to every learner simultaneously.</p>
+            <p class="solution-desc">24/7 intelligent mentor providing personalized guidance, career support, and adaptive learning tailored to each student's unique needs and goals.</p>
             <div class="solution-benefits">
-              <span class="solution-benefit">Personalized 1-on-1 attention</span>
-              <span class="solution-benefit">Available anytime, anywhere</span>
-              <span class="solution-benefit">Adapts in real-time</span>
+              <span class="solution-benefit">24/7 guidance</span>
+              <span class="solution-benefit">Personalized support</span>
+              <span class="solution-benefit">Career mentoring</span>
             </div>
           </div>
         </div>
         <div class="solution-card" data-reveal="fade-up" data-delay="200">
           <div class="solution-card-glow"></div>
           <div class="solution-image">
-            <div class="solution-img-placeholder">
-              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9"/><path d="M21 3v6h-6"/><path d="M21 3l-7 7"/><path d="M3 12a9 9 0 0 1 9-9"/></svg>
-            </div>
+            <img src="assets/AR.jpeg" alt="Augmented Reality learning experience" class="solution-img" loading="lazy" onerror="this.parentElement.classList.add('sol-img-fallback'); this.style.display='none';">
           </div>
           <div class="solution-card-body">
             <span class="solution-number">02</span>
-            <h3 class="solution-title">Holographic Classrooms</h3>
-            <p class="solution-desc">Immersive 3D learning environments where students explore complex concepts as interactive holograms — from molecular structures to ancient civilizations.</p>
+            <h3 class="solution-title">Augmented Reality Learning</h3>
+            <p class="solution-desc">Interactive learning overlays bring educational content to life. 3D models, practical visualizations, and immersive AR experiences make abstract concepts tangible.</p>
             <div class="solution-benefits">
-              <span class="solution-benefit">Immersive hands-on learning</span>
-              <span class="solution-benefit">Visualize complex concepts</span>
-              <span class="solution-benefit">No physical classroom needed</span>
+              <span class="solution-benefit">Interactive overlays</span>
+              <span class="solution-benefit">3D content</span>
+              <span class="solution-benefit">Practical visualization</span>
             </div>
           </div>
         </div>
         <div class="solution-card" data-reveal="fade-up" data-delay="300">
           <div class="solution-card-glow"></div>
           <div class="solution-image">
-            <div class="solution-img-placeholder">
-              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8l6 6"/><path d="M4 14l4 4 2-4"/><path d="M14 4l6 6"/><path d="M12 2v4"/><path d="M12 18v4"/><path d="M4 12H2"/><path d="M22 12h-2"/></svg>
-            </div>
+            <img src="assets/VR.jpeg" alt="Virtual Reality immersive learning environment" class="solution-img" loading="lazy" onerror="this.parentElement.classList.add('sol-img-fallback'); this.style.display='none';">
           </div>
           <div class="solution-card-body">
             <span class="solution-number">03</span>
-            <h3 class="solution-title">Real-Time Translation</h3>
-            <p class="solution-desc">Advanced AI translates educational content into 150+ languages in real-time, ensuring every student can learn in their native tongue without missing a beat.</p>
+            <h3 class="solution-title">Virtual Reality Learning</h3>
+            <p class="solution-desc">Immersive simulations transport students anywhere. Virtual laboratories, historical explorations, and safe practical training environments without physical limitations.</p>
             <div class="solution-benefits">
-              <span class="solution-benefit">150+ languages supported</span>
-              <span class="solution-benefit">Cultural context preservation</span>
-              <span class="solution-benefit">Real-time communication</span>
+              <span class="solution-benefit">Immersive simulations</span>
+              <span class="solution-benefit">Virtual labs</span>
+              <span class="solution-benefit">Safe practice</span>
             </div>
           </div>
         </div>
         <div class="solution-card" data-reveal="fade-up" data-delay="400">
           <div class="solution-card-glow"></div>
           <div class="solution-image">
-            <div class="solution-img-placeholder">
-              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-            </div>
+            <img src="assets/holographic-class.jpeg" alt="Holographic classroom with 3D teachers" class="solution-img" loading="lazy" onerror="this.parentElement.classList.add('sol-img-fallback'); this.style.display='none';">
           </div>
           <div class="solution-card-body">
             <span class="solution-number">04</span>
-            <h3 class="solution-title">Global Learning Network</h3>
-            <p class="solution-desc">A connected ecosystem of learners from 190+ countries collaborating on projects, sharing knowledge, and breaking down cultural and geographic barriers.</p>
+            <h3 class="solution-title">Holographic Classrooms</h3>
+            <p class="solution-desc">3D hologram teachers deliver interactive lessons without location limitations. Future classrooms that exist anywhere, bringing education to every corner of the world.</p>
             <div class="solution-benefits">
-              <span class="solution-benefit">190+ countries connected</span>
-              <span class="solution-benefit">Cross-cultural collaboration</span>
-              <span class="solution-benefit">Peer-to-peer learning</span>
+              <span class="solution-benefit">3D hologram teachers</span>
+              <span class="solution-benefit">Interactive learning</span>
+              <span class="solution-benefit">No location limits</span>
             </div>
           </div>
         </div>
         <div class="solution-card" data-reveal="fade-up" data-delay="500">
           <div class="solution-card-glow"></div>
           <div class="solution-image">
-            <div class="solution-img-placeholder">
-              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-            </div>
+            <img src="assets/personalised-learning.jpeg" alt="Personalized learning engine adapting to each student" class="solution-img" loading="lazy" onerror="this.parentElement.classList.add('sol-img-fallback'); this.style.display='none';">
           </div>
           <div class="solution-card-body">
             <span class="solution-number">05</span>
-            <h3 class="solution-title">AI Career Architect</h3>
-            <p class="solution-desc">An intelligent system that analyzes student strengths, interests, and global job market trends to design personalized career pathways and skill development plans.</p>
+            <h3 class="solution-title">Personalized Learning Engine</h3>
+            <p class="solution-desc">Unique learning paths for every student. Custom curriculum, personal pace, and AI adaptation ensure no learner is left behind or held back.</p>
             <div class="solution-benefits">
-              <span class="solution-benefit">Personalized career mapping</span>
-              <span class="solution-benefit">Market-aligned skill building</span>
-              <span class="solution-benefit">Lifelong career guidance</span>
+              <span class="solution-benefit">Unique learning path</span>
+              <span class="solution-benefit">Custom curriculum</span>
+              <span class="solution-benefit">AI adaptation</span>
             </div>
           </div>
         </div>
         <div class="solution-card" data-reveal="fade-up" data-delay="600">
           <div class="solution-card-glow"></div>
           <div class="solution-image">
-            <div class="solution-img-placeholder">
-              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-            </div>
+            <img src="assets/global-learning.jpeg" alt="Global learning network connecting students worldwide" class="solution-img" loading="lazy" onerror="this.parentElement.classList.add('sol-img-fallback'); this.style.display='none';">
           </div>
           <div class="solution-card-body">
             <span class="solution-number">06</span>
-            <h3 class="solution-title">Adaptive Curriculum Engine</h3>
-            <p class="solution-desc">A self-evolving AI that dynamically adjusts curriculum difficulty, content delivery, and assessment methods based on real-time student performance data.</p>
+            <h3 class="solution-title">Global Learning Network</h3>
+            <p class="solution-desc">Worldwide collaboration and knowledge sharing. Global projects connect students across borders, creating a truly international learning community.</p>
             <div class="solution-benefits">
-              <span class="solution-benefit">Dynamic difficulty adjustment</span>
-              <span class="solution-benefit">Personalized learning paths</span>
-              <span class="solution-benefit">Continuous improvement</span>
+              <span class="solution-benefit">Worldwide collaboration</span>
+              <span class="solution-benefit">Knowledge sharing</span>
+              <span class="solution-benefit">Cross-border learning</span>
+            </div>
+          </div>
+        </div>
+        <div class="solution-card" data-reveal="fade-up" data-delay="700">
+          <div class="solution-card-glow"></div>
+          <div class="solution-image">
+            <img src="assets/global-edu-network.jpeg" alt="Real-time translation breaking language barriers" class="solution-img" loading="lazy" onerror="this.parentElement.classList.add('sol-img-fallback'); this.style.display='none';">
+          </div>
+          <div class="solution-card-body">
+            <span class="solution-number">07</span>
+            <h3 class="solution-title">Real-Time Translation</h3>
+            <p class="solution-desc">Instant translation enables learning in any native language. No language barriers, global communication becomes seamless and natural for every student.</p>
+            <div class="solution-benefits">
+              <span class="solution-benefit">Instant translation</span>
+              <span class="solution-benefit">Native language learning</span>
+              <span class="solution-benefit">No language barriers</span>
+            </div>
+          </div>
+        </div>
+        <div class="solution-card" data-reveal="fade-up" data-delay="800">
+          <div class="solution-card-glow"></div>
+          <div class="solution-image">
+            <img src="assets/future-education-ai.jpeg" alt="Universal education access anywhere" class="solution-img" loading="lazy" onerror="this.parentElement.classList.add('sol-img-fallback'); this.style.display='none';">
+          </div>
+          <div class="solution-card-body">
+            <span class="solution-number">08</span>
+            <h3 class="solution-title">Universal Education Access</h3>
+            <p class="solution-desc">Education anywhere, for everyone. No geographical restrictions, equal opportunities for all. Learning becomes a fundamental right, fully realized.</p>
+            <div class="solution-benefits">
+              <span class="solution-benefit">Education anywhere</span>
+              <span class="solution-benefit">For everyone</span>
+              <span class="solution-benefit">Equal opportunities</span>
             </div>
           </div>
         </div>
@@ -791,7 +771,7 @@
         </div>
       </div>
     </div>
-    <audio id="audio-player" preload="auto" src="music/First_Light_of_day.mp3" playsinline></audio>
+    <audio id="audio-player" preload="auto" src="assets/music/First_Light_of_day.mp3" playsinline></audio>
   </section>
 
   <!-- A DAY IN THE LIFE OF A STUDENT IN 2050 -->
@@ -1150,7 +1130,7 @@
         <p class="section-subtitle">Where learning comes alive</p>
       </div>
       <div class="classroom-wrapper" data-reveal="fade-up" data-delay="200">
-        <div class="classroom-frame parallax-layer" id="classroom-parallax">
+        <div class="classroom-frame parallax-layer" id="classroom-parallax" role="button" tabindex="0">
           <div class="classroom-glow"></div>
           <div class="classroom-image-wrapper">
             <img
